@@ -9,7 +9,7 @@
     $mainId = isset($id) ? $id : 'inputId';
     $mainName = isset($name) ? $name : 'inputName';
     $mainType = isset($type) ? $type : 'text';
-    $mainRequired = isset($required) ? $required : true;
+    $mainRequired = isset($required) ? $required : false;
 @endphp
 
 <div>

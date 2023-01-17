@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "daisyui": "^2.46.1",
+        "tailwind-scrollbar": "^2.1.0",
         "tw-elements": "^1.0.0-alpha13"
     }
 }

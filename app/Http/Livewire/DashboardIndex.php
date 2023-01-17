@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +16,8 @@ class DashboardIndex extends Component
         $data = [
             'title' => "Dashboard"
         ];
-
-        if ($this->userAuth->role == 0) {
-            return view('livewire.user.dashboard-index', compact('data'));
+        if ($this->userAuth->role == 'User') {
+            return view('livewire.user.dashboard.index', compact('data'));
         }
     }
 }

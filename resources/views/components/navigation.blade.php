@@ -1,12 +1,12 @@
 <div class="flex flex-row items-start">
-    <div class="hidden md:block w-72 min-h-screen shadow-lg border relative" id="sidebar">
-        <div class="pt-4 pb-2 px-6">
+    <div class="relative hidden min-h-screen border shadow-lg md:block w-72" id="sidebar">
+        <div class="px-6 pt-4 pb-2">
             <a href="/">
-                <div class="flex flex-col justify-center items-center">
+                <div class="flex flex-col items-center justify-center">
                     <div class="shrink-0">
-                        <img src="image/logo.svg" class="rounded-full w-10" alt="Avatar">
+                        <img src="/image/logo.svg" class="w-10 rounded-full" alt="Avatar">
                     </div>
-                    <div class="grow ml-3">
+                    <div class="ml-3 grow">
                         <p class="text-lg font-semibold text-gray-600">Legalisir App</p>
                     </div>
                 </div>
@@ -14,21 +14,21 @@
         </div>
         <ul class="relative">
             <li class="relative">
-                <a class="flex items-center gap-4 py-4 text-sm px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                     href="/dashboard">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="relative">
-                <a class="flex items-center gap-4 py-4 text-sm px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                     href="/legalize">
                     <i class="fa-solid fa-file"></i>
                     <span class="pl-1">Data Legalisir</span>
                 </a>
             </li>
             <li class="relative" id="OrderMenu">
-                <a class="flex items-center gap-4 py-4 text-sm px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+                <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded cursor-pointer text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                     data-bs-toggle="collapse" data-bs-target="#collapseOrderMenu" aria-expanded="false"
                     aria-controls="collapseOrderMenu">
                     <i class="fas fa-clipboard"></i>
@@ -40,73 +40,73 @@
                 <ul class="relative accordion-collapse collapse" id="collapseOrderMenu" aria-labelledby="OrderMenu"
                     data-bs-parent="#sidebar">
                     <li class="relative">
-                        <a href="/order/payment"
-                            class="flex flex-row items-center gap-2 text-xs pl-12 ml-2 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out">
-                            <i class="fas fa-circle text-gray-500"></i>
+                        <a href="/order#payment"
+                            class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
+                            <i class="text-gray-500 fas fa-circle"></i>
                             <span>Menunggu Pembayaran</span>
                         </a>
                     </li>
                     <li class="relative">
-                        <a href="/order/confirmation"
-                            class="flex flex-row items-center gap-2 text-xs pl-12 ml-2 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out">
-                            <i class="fas fa-circle text-gray-500"></i>
+                        <a href="/order#confirmation"
+                            class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
+                            <i class="text-gray-500 fas fa-circle"></i>
                             <span>Menunggu Konfirmasi</span>
                         </a>
                     </li>
                     <li class="relative">
-                        <a href="/order/shipment"
-                            class="flex flex-row items-center gap-2 text-xs pl-12 ml-2 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out">
-                            <i class="fas fa-circle text-gray-500"></i>
+                        <a href="/order#shipment"
+                            class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
+                            <i class="text-gray-500 fas fa-circle"></i>
                             <span>Menunggu Pengiriman</span>
                         </a>
                     </li>
                     <li class="relative">
                         <a href="/order"
-                            class="flex flex-row items-center gap-2 text-xs pl-12 ml-2 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out">
-                            <i class="fas fa-circle text-gray-500"></i>
+                            class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
+                            <i class="text-gray-500 fas fa-circle"></i>
                             <span>Semua Pesanan</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="relative">
-                <a class="flex items-center gap-4 py-4 text-sm px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                     href="/profile">
                     <i class="fas fa-user"></i>
                     <span class="ml-[0.17rem]">Profil Saya</span>
                 </a>
             </li>
         </ul>
-        <div class="text-center w-full absolute bottom-0 shadow-md">
+        <div class="absolute bottom-0 w-full text-center shadow-md">
             <hr class="m-0">
             <p class="py-2 text-sm text-gray-700">Copyright@2023</p>
         </div>
     </div>
-    <div class="flex flex-col items-start gap-8 w-full px-8">
-        <div class="hidden md:block w-full">
-            <nav class="navbar shadow-md rounded-2xl border mt-2">
-                <div class="navbar-start px-4">
-                    <div class="hover:scale-105 duration-100">
+    <div class="flex flex-col items-start w-full gap-8 px-8">
+        <div class="hidden w-full md:block">
+            <nav class="mt-2 border shadow-md navbar rounded-2xl">
+                <div class="px-4 navbar-start">
+                    <div class="duration-100 hover:scale-105">
                         <h1 class="text-lg text-gray-500">@yield('title')</h1>
                     </div>
                 </div>
-                <div class="navbar-end px-4">
+                <div class="px-4 navbar-end">
                     <div class="dropdown dropdown-end">
                         <label tabIndex="0" class="btn btn-ghost btn-circle avatar">
-                            <div class="w-11 normal-case rounded-full border-2 p-1">
+                            <div class="p-1 normal-case border-2 rounded-full w-11">
                                 <img src={{ '/image/logo.svg' }} alt="Akun" />
                             </div>
                         </label>
-                        <ul tabIndex="0" class="mt-3 p-2 shadow dropdown-content bg-base-100 rounded-box w-max">
-                            <li class="cursor-pointer hover:text-primary p-2 hover:scale-105">
-                                <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded-lg hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                        <ul tabIndex="0" class="p-2 mt-3 shadow dropdown-content bg-base-100 rounded-box w-max">
+                            <li class="p-2 cursor-pointer hover:text-primary hover:scale-105">
+                                <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                                     href="/profile">
                                     <i class="fas fa-user"></i>
                                     <span class="">Profil Saya</span>
                                 </a>
                             </li>
-                            <li class="cursor-pointer hover:text-primary p-2 hover:scale-105">
-                                <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded-lg hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                            <li class="p-2 cursor-pointer hover:text-primary hover:scale-105">
+                                <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
                                     href="#logout-confirm">
                                     <i class="fas fa-right-from-bracket"></i>
                                     <span class="">Logout</span>
@@ -117,10 +117,10 @@
                 </div>
             </nav>
         </div>
-        <div class="block md:hidden w-full">
+        <div class="block w-full md:hidden">
             <x-navbar />
         </div>
-        <div class="mt-0 w-full">
+        <div class="w-full">
             {{ $slot }}
         </div>
     </div>
@@ -130,7 +130,7 @@
 {{-- Logout --}}
 <div class="modal" id="logout-confirm">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">
+        <h3 class="text-lg font-bold">
             Apakah anda yakin ingin keluar?
         </h3>
         <div class="modal-action">

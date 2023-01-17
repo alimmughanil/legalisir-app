@@ -1,3 +1,8 @@
-<div>
-    {{-- Care about people's approval and you will be their prisoner. --}}
-</div>
+@extends('layouts.app')
+@section('title', $data['title'])
+
+@section('content')
+    <x-navigation>
+        <x-table />
+    </x-navigation>
+@endsection

@@ -1,3 +1,8 @@
-<div>
-    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
-</div>
+@extends('layouts.app')
+@section('title', $data['title'])
+
+@section('content')
+    <x-navigation>
+        <x-table />
+    </x-navigation>
+@endsection

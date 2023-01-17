@@ -1,3 +1,8 @@
-<div>
-    {{-- The whole world belongs to you. --}}
-</div>
+@extends('layouts.app')
+@section('title', $data['title'])
+
+@section('content')
+    <x-navigation>
+        <x-table />
+    </x-navigation>
+@endsection

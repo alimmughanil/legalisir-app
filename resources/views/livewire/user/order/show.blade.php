@@ -1,3 +1,8 @@
-<div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-</div>
+@extends('layouts.app')
+@section('title', $data['title'])
+
+@section('content')
+    <x-navigation>
+        <x-table />
+    </x-navigation>
+@endsection

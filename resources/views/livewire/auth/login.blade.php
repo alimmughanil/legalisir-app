@@ -4,8 +4,10 @@
         <img class="w-24 mx-auto" src="/image/logo.svg" alt="logo" />
         <h4 class="pb-1 mt-1 mb-6 text-xl font-semibold">Legalisir App</h4>
     </a>
+
     <!-- Session Status -->
     <x-partials.auth-session-status class="mb-4" :status="session('status')" />
+
 
     <form wire:submit.prevent="authenticate">
         <div class="grid grid-cols-1 gap-4">
