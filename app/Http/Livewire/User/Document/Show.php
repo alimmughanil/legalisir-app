@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User\Legalize;
+namespace App\Http\Livewire\User\Document;
 
 use Livewire\Component;
 
@@ -13,6 +13,6 @@ class Show extends Component
             'title' => "Data Legalisir"
         ];
 
-        return view('livewire.user.legalize.show', compact('data'));
+        return view('livewire.user.document.show', compact('data'));
     }
 }

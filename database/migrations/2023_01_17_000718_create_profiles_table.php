@@ -17,12 +17,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('photo');
-            $table->string('address');
-            $table->string('city');
-            $table->string('provice');
-            $table->string('country');
-            $table->string('postcode');
+           
+            $table->bigInteger('school_id')->unsigned()->index();
+            $table->string('student_id');
+            $table->longText('photo');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('provice')->nullable();
+            $table->string('country')->nullable();
+            $table->string('postcode')->nullable();
             $table->timestamps();
         });
     }

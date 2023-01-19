@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,15 @@ class SchoolFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => User::where('role', 'Admin')->get()->random()->id,
+            'school_name' => "SMA N ". rand(1,9). " " . $this->faker->city(),
+            'school_icon' => "https://source.unsplash.com/random/100x100/?landscape",
+            'school_address' => $this->faker->streetAddress(),
+            'city' => $this->faker->city(),
+            'provice' => $this->faker->state(),
+            'country' => $this->faker->country(),
+            'postcode' => $this->faker->postcode(),
         ];
+
     }
 }

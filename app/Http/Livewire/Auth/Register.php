@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Auth;
 
 use App\Models\User;
+use App\Models\Profile;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Laravolt\Avatar\Avatar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -39,8 +41,17 @@ class Register extends Component
             'remember_token'=> Str::random(16),
         ]);
 
-        event(new Registered($user));
+        $avatar = new Avatar;
+        $photo = $avatar->create($this->name)
+                ->setBackground('#474E68')
+                ->setTheme('colorful')
+                ->toBase64();
+        $profile = Profile::create([
+            'user_id' => $user->id,
+            'photo' => $photo
+        ]);
 
+        event(new Registered($user));
         Auth::login($user, true);
 
         return redirect()->intended(route('home'));

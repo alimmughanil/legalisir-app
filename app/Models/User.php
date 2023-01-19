@@ -3,10 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Order;
+use App\Models\School;
+use App\Models\Profile;
+use App\Models\Document;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -43,4 +48,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $with = ['profile'];
+
+    public function profile(){
+        return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+    public function document(){
+        return $this->hasOne(Document::class, 'user_id', 'id');
+    }
+    public function school(){
+        return $this->hasOne(School::class);
+    }
+    public function order(){
+        return $this->hasOne(Order::class, 'user_id', 'id');
+    }
 }

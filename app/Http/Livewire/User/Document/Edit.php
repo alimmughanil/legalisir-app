@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User\Legalize;
+namespace App\Http\Livewire\User\Document;
 
 use Livewire\Component;
 
@@ -12,6 +12,6 @@ class Edit extends Component
         $data = [
             'title' => "Edit Data Legalisir"
         ];
-        return view('livewire.user.legalize.edit', compact('data'))->extends('layouts.auth');
+        return view('livewire.user.document.edit', compact('data'))->extends('layouts.auth');
     }
 }

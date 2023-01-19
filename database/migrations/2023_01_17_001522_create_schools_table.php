@@ -17,8 +17,14 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('name');
-            $table->string('icon')->nullable();
+            
+            $table->string('school_name');
+            $table->string('school_icon')->nullable();
+            $table->string('school_address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('provice')->nullable();
+            $table->string('country')->nullable();
+            $table->string('postcode')->nullable();
             $table->timestamps();
         });
     }

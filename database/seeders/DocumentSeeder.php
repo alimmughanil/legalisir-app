@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Document;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class LegalizeSeeder extends Seeder
+class DocumentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,6 @@ class LegalizeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Document::factory()->count(10)->create();
     }
 }

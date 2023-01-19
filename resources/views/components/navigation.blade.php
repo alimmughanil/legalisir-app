@@ -22,9 +22,9 @@
             </li>
             <li class="relative">
                 <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
-                    href="/legalize">
+                    href="/document">
                     <i class="fa-solid fa-file"></i>
-                    <span class="pl-1">Data Legalisir</span>
+                    <span class="pl-1">Data Dokumen</span>
                 </a>
             </li>
             <li class="relative" id="OrderMenu">
@@ -82,7 +82,7 @@
             <p class="py-2 text-sm text-gray-700">Copyright@2023</p>
         </div>
     </div>
-    <div class="flex flex-col items-start w-full gap-8 px-8">
+    <div class="flex flex-col items-start w-full gap-2 px-4 sm:gap-8 md:px-8">
         <div class="hidden w-full md:block">
             <nav class="mt-2 border shadow-md navbar rounded-2xl">
                 <div class="px-4 navbar-start">
@@ -93,8 +93,13 @@
                 <div class="px-4 navbar-end">
                     <div class="dropdown dropdown-end">
                         <label tabIndex="0" class="btn btn-ghost btn-circle avatar">
-                            <div class="p-1 normal-case border-2 rounded-full w-11">
-                                <img src={{ '/image/logo.svg' }} alt="Akun" />
+                            <div class="normal-case border-2 rounded-full w-11">
+                                @if (Auth::user())
+                                    <img src="{{ Auth::user()->profile->photo }}" class="w-10 rounded-full"
+                                        alt="Avatar">
+                                @else
+                                    <img src="/image/logo.svg" class="w-10 rounded-full" alt="Avatar">
+                                @endif
                             </div>
                         </label>
                         <ul tabIndex="0" class="p-2 mt-3 shadow dropdown-content bg-base-100 rounded-box w-max">

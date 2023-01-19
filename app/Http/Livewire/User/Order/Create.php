@@ -6,11 +6,14 @@ use Livewire\Component;
 
 class Create extends Component
 {
+    public $active = "Data Pemesan";
+
+    public function setActive($state){
+        return $this->active = $state;
+    }
+    
     public function render()
     {
-        $data = [
-            'title' => "Buat Pesanan Legalisir Ijazah"
-        ];
-        return view('livewire.user.order.create', compact('data'));
+        return view('livewire.user.order.create');
     }
 }

@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Legalize;
+use App\Models\Document;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use App\Http\Livewire\User\Legalize\Edit;
-use App\Http\Livewire\User\Legalize\Index as LegalizeIndex;
-use App\Http\Livewire\User\Legalize\Create as LegalizeCreate;
+use App\Http\Livewire\User\Document\Edit;
+use App\Http\Livewire\User\Document\Index as DocumentIndex;
+use App\Http\Livewire\User\Document\Create as DocumentCreate;
 
-class LegalizeController extends Controller
+class DocumentController extends Controller
 {
     public function index()
     {
         $user_id = Auth::user()->id;
-        $legalize = Legalize::where('user_id',$user_id)->first();
+        $document = Document::where('user_id',$user_id)->with('user.profile.school')->first();
         $data = [
-            'title' => "Data Legalisir",
-            'legalize'=>$legalize
+            'title' => "Data Dokumen",
+            'document'=>$document
         ];
-        return view('livewire.user.legalize.index', compact('data'));
+        return view('page.user.document-index', compact('data'));
     }
 
     /**
@@ -29,9 +29,12 @@ class LegalizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(LegalizeCreate $create)
+    public function create()
     {
-        return $create->render();
+        $data = [
+            'title' => "Tambah Data Dokumen Baru",
+        ];
+        return view('page.user.document-create', compact('data'));
     }
 
     public function store(Request $request)
@@ -52,13 +55,13 @@ class LegalizeController extends Controller
         $validatedData['ijazah'] = '/storage/image/'.$ijazahFileName;
         $validatedData['transkrip'] = '/storage/image/'.$transkripFileName;
 
-        $store = Legalize::create($validatedData);
-        $message = "Tambah Data Legalisir Gagal";
+        $store = Document::create($validatedData);
+        $message = "Tambah Data Dokumen Gagal";
         if ($store) {
-            $message = "Tambah Data Legalisir Berhasil";
+            $message = "Tambah Data Dokumen Berhasil";
         }
             
-        return redirect('/legalize')->with('message',$message);
+        return redirect('/document')->with('message',$message);
     }
 
     /**
@@ -80,12 +83,12 @@ class LegalizeController extends Controller
      */
     public function edit($id)
     {
-        $legalize = Legalize::where('id',$id)->first();
+        $document = Document::where('id',$id)->first();
         $data = [
-            'title' => "Edit Data Legalisir",
-            'legalize'=>$legalize
+            'title' => "Edit Data Dokumen",
+            'document'=>$document
         ];
-        return view('livewire.user.legalize.edit', compact('data'));
+        return view('page.user.document-edit', compact('data'));
     }
 
     /**
@@ -103,27 +106,27 @@ class LegalizeController extends Controller
         ]);
         
 
-        $legalize = Legalize::where('id',$id)->first();
+        $document = Document::where('id',$id)->first();
         if ($request->file('ijazah')) {
             $ijazahFileName = $id.'-ijazah-'. Str::random(16) . $request->file('ijazah')->getClientOriginalName();
-            File::delete(public_path($legalize->ijazah));
+            File::delete(public_path($Document->ijazah));
             $request->file('ijazah')->move(public_path('/storage/image'), $ijazahFileName);
             $validatedData['ijazah'] = '/storage/image/'.$ijazahFileName;
         }
         if ($request->file('transkrip')) {
             $transkripFileName = $id.'-transkrip-'. Str::random(16) . $request->file('transkrip')->getClientOriginalName();
-            File::delete(public_path($legalize->transkrip));
+            File::delete(public_path($Document->transkrip));
             $request->file('transkrip')->move(public_path('/storage/image'), $transkripFileName);
             $validatedData['transkrip'] = '/storage/image/'.$transkripFileName;
         }
 
-        $update = $legalize->update($validatedData);
-        $message = "Edit Data Legalisir Gagal";
+        $update = $Document->update($validatedData);
+        $message = "Edit Data Dokumen Gagal";
         if ($update) {
-            $message = "Edit Data Legalisir Berhasil";
+            $message = "Edit Data Dokumen Berhasil";
         }
             
-        return redirect('/legalize')->with('message',$message);
+        return redirect('/document')->with('message',$message);
     }
 
     /**

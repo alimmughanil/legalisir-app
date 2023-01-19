@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\User\Dashboard;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardIndex extends Component
+class Index extends Component
 {
     public $userAuth;
     public function __construct(){
@@ -13,11 +13,8 @@ class DashboardIndex extends Component
     }
     public function render()
     {
-        $data = [
-            'title' => "Dashboard"
-        ];
         if ($this->userAuth->role == 'User') {
-            return view('livewire.user.dashboard.index', compact('data'));
+            return view('livewire.user.dashboard.index');
         }
     }
 }

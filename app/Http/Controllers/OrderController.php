@@ -13,7 +13,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => "Pesanan Saya"
+        ];
+
+        return view('page.user.order-index', compact('data'));
     }
 
     /**
@@ -23,7 +27,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title'=>'Buat Pesanan Legalisir Dokumen'
+        ];
+        return view('page.user.order-create', compact('data'));
     }
 
     /**

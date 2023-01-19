@@ -11,7 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Auth\Passwords\Email;
 
 use App\Http\Livewire\Auth\Passwords\Reset;
-use App\Http\Controllers\LegalizeController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Controllers\Auth\LogoutController;
@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('/dashboard', DashboardController::class)->only('index');
     Route::resource('/profile', ProfileController::class)->only('index','store','update','destroy');
-    Route::resource('/legalize', LegalizeController::class)->only('index','create','store','show','edit','update','destroy');
+    Route::resource('/document', DocumentController::class)->only('index','create','store','show','edit','update','destroy');
     Route::resource('/order', OrderController::class)->only('index','create','store','show','edit','update');
     Route::resource('/payment', PaymentController::class)->only('store','update');
 });

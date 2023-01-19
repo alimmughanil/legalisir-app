@@ -6,6 +6,11 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $active = "Semua Pesanan";
+
+    public function setActive($state){
+        return $this->active = $state;
+    }
     public function render()
     {
         $data = [
