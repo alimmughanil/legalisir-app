@@ -23,6 +23,7 @@ class ProfileFactory extends Factory
             'user_id' => $school->user_id,
             'school_id' => $school->id,
             'student_id' => rand(1111111111,9999999999),
+            'graduated_at' => $this->faker->year('-'.rand(1,12).'years'),
             'photo' => "https://source.unsplash.com/random/100x100/?landscape",
             'address' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),

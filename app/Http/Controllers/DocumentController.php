@@ -39,23 +39,14 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        $user_id = Auth::user()->id;
         $validatedData = $request->validate([
-            'ijazah' => ['required', 'file', 'image'],
-            'transkrip' => ['required', 'file', 'image'],
+            'ijazah' => ['required'],
+            'transkrip' => ['required'],
         ]);
-        
-        $ijazahFileName = $user_id.'-ijazah-'. Str::random(16) . $request->file('ijazah')->getClientOriginalName();
-        $transkripFileName = $user_id.'-transkrip-'. Str::random(16) . $request->file('transkrip')->getClientOriginalName();
-
-        $request->file('ijazah')->move(public_path('/storage/image'), $ijazahFileName);
-        $request->file('transkrip')->move(public_path('/storage/image'), $transkripFileName);
-
-        $validatedData['user_id'] = $user_id;
-        $validatedData['ijazah'] = '/storage/image/'.$ijazahFileName;
-        $validatedData['transkrip'] = '/storage/image/'.$transkripFileName;
+        $validatedData['user_id'] = Auth::user()->id;
 
         $store = Document::create($validatedData);
+        
         $message = "Tambah Data Dokumen Gagal";
         if ($store) {
             $message = "Tambah Data Dokumen Berhasil";
@@ -83,12 +74,16 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        $document = Document::where('id',$id)->first();
-        $data = [
-            'title' => "Edit Data Dokumen",
-            'document'=>$document
-        ];
-        return view('page.user.document-edit', compact('data'));
+        $document = Document::where('id',$id)->with('user')->first();
+        if ($document) {
+            $data = [
+                'title' => "Edit Data Dokumen",
+                'document'=>$document
+            ];
+            return view('page.user.document-edit', compact('data'));
+        } else {
+            return redirect('/document/create')->with('message', 'Silahkan Data Dokumen Terlebih Dahulu');
+        }
     }
 
     /**

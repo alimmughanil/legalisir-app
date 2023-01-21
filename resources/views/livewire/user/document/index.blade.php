@@ -12,36 +12,42 @@
             <div class="relative p-2 border rounded-md shadow-sm bg-gray-50">
                 @if (isset($document))
                     <div class="absolute right-4">
-                        <i class="text-2xl fas fa-download"></i>
+                        <button wire:click="download('ijazah')" wire:loading.attr="disabled"
+                            wire:loading.class="text-gray-400" class="flex flex-col items-center">
+                            <i class="text-2xl fas fa-download"></i>
+                            <span class="text-sm">Download</span>
+                        </button>
                     </div>
                     <div class="text-lg font-semibold">Data Ijazah</div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
+                        <i class="scale-50 fas fa-circle"></i>
                         <span>{{ $document->user->name }}</span>
                     </div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
+                        <i class="scale-50 fas fa-circle"></i>
                         <span>{{ $document->user->profile->student_id }}</span>
                     </div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>{{ $document->user->name }}</span>
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>{{ $document->user->profile->school->school_name }}</span>
                     </div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>Lulus pada tahun 2022</span>
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>Lulus pada tahun {{ $document->user->profile->graduated_at }}</span>
                     </div>
                     <div class="flex flex-row items-start justify-between mt-4">
-                        <div class="font-medium text-white bg-green-600 border-green-600 badge">Valid
-                        </div>
-                        <div class="font-medium">19 Jan 2023</div>
+                        @php
+                            $statusClass = '';
+                            if ($document->status == 'Confirm') {
+                                $statusClass = 'text-white bg-green-600 border-green-600';
+                            }
+                            if ($document->status == 'Reject') {
+                                $statusClass = 'text-white bg-red-600 border-red-600';
+                            }
+                        @endphp
+                        <div class="font-medium badge {{ $statusClass }}">{{ $document->status }}</div>
+                        <div class="font-medium">{{ date('d-m-Y', strtotime($document->updated_at)) }}</div>
                     </div>
-                    {{-- <img src="{{ $document->ijazah }}" width="400px" class="mx-auto border shadow-lg"
-                        alt=""> --}}
                 @else
                     <p>Belum ada data yang ditambahkan</p>
                 @endif
@@ -51,36 +57,42 @@
             <div class="relative p-2 border rounded-md shadow-sm bg-gray-50">
                 @if (isset($document))
                     <div class="absolute right-4">
-                        <i class="text-2xl fas fa-download"></i>
+                        <button wire:click="download('transkrip')" wire:loading.attr="disabled"
+                            wire:loading.class="text-gray-400" class="flex flex-col items-center">
+                            <i class="text-2xl fas fa-download"></i>
+                            <span class="text-sm">Download</span>
+                        </button>
                     </div>
-                    <div class="text-lg font-semibold">Data Transkrip</div>
+                    <div class="text-lg font-semibold">Data Transkrip Nilai</div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>Alim Mughanil Karim</span>
-                    </div>
-                    <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>1908096035</span>
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>{{ $document->user->name }}</span>
                     </div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>SMKN 1 Adiwerna</span>
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>{{ $document->user->profile->student_id }}</span>
                     </div>
                     <div class="text-sm text-gray-600">
-                        <i class="scale-50 fas fa-circle">
-                        </i>
-                        <span>Lulus pada tahun 2022</span>
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>{{ $document->user->profile->school->school_name }}</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <i class="scale-50 fas fa-circle"></i>
+                        <span>Lulus pada tahun {{ $document->user->profile->graduated_at }}</span>
                     </div>
                     <div class="flex flex-row items-start justify-between mt-4">
-                        <div class="font-medium text-white badge">Menunggu Validasi
-                        </div>
-                        <div class="font-medium">19 Jan 2023</div>
+                        @php
+                            $statusClass = '';
+                            if ($document->status == 'Confirm') {
+                                $statusClass = 'text-white bg-green-600 border-green-600';
+                            }
+                            if ($document->status == 'Reject') {
+                                $statusClass = 'text-white bg-red-600 border-red-600';
+                            }
+                        @endphp
+                        <div class="font-medium badge {{ $statusClass }}">{{ $document->status }}</div>
+                        <div class="font-medium">{{ date('d-m-Y', strtotime($document->updated_at)) }}</div>
                     </div>
-                    {{-- <img src="{{ $document->transkrip }}" width="400px" class="mx-auto border shadow-lg"
-                        alt=""> --}}
                 @else
                     <p>Belum ada data yang ditambahkan</p>
                 @endif

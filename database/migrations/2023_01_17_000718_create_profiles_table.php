@@ -20,6 +20,7 @@ return new class extends Migration
            
             $table->bigInteger('school_id')->unsigned()->index();
             $table->string('student_id');
+            $table->string('graduated_at');
             $table->longText('photo');
             $table->string('address')->nullable();
             $table->string('city')->nullable();

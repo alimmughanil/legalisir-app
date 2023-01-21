@@ -1,8 +1,16 @@
+const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+    content: ["./resources/**/*.blade.php", "./vendor/filament/**/*.blade.php"],
     theme: {
         extend: {
+            colors: {
+                danger: colors.rose,
+                primary: colors.indigo,
+                success: colors.green,
+                warning: colors.yellow,
+            },
             fontFamily: {
                 sans: ["Inter var", ...defaultTheme.fontFamily.sans],
             },

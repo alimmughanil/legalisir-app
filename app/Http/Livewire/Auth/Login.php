@@ -5,16 +5,17 @@ namespace App\Http\Livewire\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Checkbox;
 
-class Login extends Component
+class Login extends Component implements HasForms
 {
-    /** @var string */
+    use InteractsWithForms;
+
     public $email = '';
-
-    /** @var string */
     public $password = '';
-
-    /** @var bool */
     public $remember = false;
 
     protected $rules = [
@@ -22,6 +23,23 @@ class Login extends Component
         'password' => ['required'],
     ];
     
+    protected function getFormSchema(): array
+    {
+        return [
+            TextInput::make('email')
+                ->label('Email')
+                ->email()
+                ->required(),
+            TextInput::make('password')
+                ->label('Password')
+                ->password()
+                ->required(),   
+            Checkbox::make('remember')
+                ->label('Ingat Saya')
+                ->inline()
+        ];
+    }
+
     public function authenticate()
     {
         $this->validate();

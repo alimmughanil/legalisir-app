@@ -31,6 +31,10 @@ Route::get('/optimize', function () {
             Artisan::call('optimize');
             dd(Artisan::output());
         });
+Route::get('/link', function () {
+            Artisan::call('storage:link');
+            dd(Artisan::output());
+        });
 
 Route::view('/', 'welcome')->name('home');
 Route::get('password/reset', Email::class)->name('password.request');
