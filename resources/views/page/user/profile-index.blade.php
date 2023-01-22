@@ -3,6 +3,6 @@
 
 @section('content')
     <x-navigation>
-        @livewire('user.profile.index', $data)
+        <livewire:user.profile.index />
     </x-navigation>
 @endsection

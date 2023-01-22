@@ -15,11 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->bigInteger('document_id')->unsigned()->index();
-           
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('document_id')->constrained('documents');
             $table->string('transaction_id');
             $table->string('ijazah_idn_qty');
             $table->string('transkrip_idn_qty');

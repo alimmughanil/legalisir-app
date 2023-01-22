@@ -53,6 +53,7 @@ class Create extends Component implements HasForms
             TextInput::make('graduated_at')
                 ->label('Tahun Lulus')
                 ->required()
+                ->numeric()
                 ->beforeOrEqual(now()->format('Y'))
                 ->dehydrated(false),
             FileUpload::make('ijazah')

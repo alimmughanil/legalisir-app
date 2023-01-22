@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-           
-            $table->bigInteger('school_id')->unsigned()->index();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('school_id');
+
+            $table->string('phone')->nullable();
             $table->string('student_id');
             $table->string('graduated_at');
             $table->longText('photo');

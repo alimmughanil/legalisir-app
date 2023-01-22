@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');            
             $table->string('school_name');
+            $table->string('school_phone')->nullable();
             $table->string('school_icon')->nullable();
             $table->string('school_address')->nullable();
             $table->string('city')->nullable();

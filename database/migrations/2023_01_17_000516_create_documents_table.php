@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('ijazah')->nullable();
             $table->string('transkrip')->nullable();
             $table->enum('status', ['Pending', 'Confirm', 'Reject'])->default('Pending');

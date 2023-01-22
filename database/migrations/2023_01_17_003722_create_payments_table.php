@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('order_id')->unsigned()->index();
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders');
             $table->enum('status', ['Pending','Success','Failed'])->default('Pending');
             $table->timestamps();
         });

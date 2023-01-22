@@ -13,19 +13,9 @@
         @if ($active == 'Data Pemesan')
             <div class="">
                 <div class="py-4">
-                    <x-utils.form.input label="Nama Pemesan" id="name" type="text" name="name"
-                        :value="old('name')" required autofocus />
-                    <x-partials.input-error :messages="$errors->get('name')" />
-                </div>
-                <div class="py-4">
-                    <x-utils.form.input label="NIS" id="student_id" type="text" name="student_id"
-                        :value="old('student_id')" required autofocus />
-                    <x-partials.input-error :messages="$errors->get('student_id')" />
-                </div>
-                <div class="py-4">
-                    <x-utils.form.input label="Alamat" id="address" type="text" name="address" :value="old('address')"
+                    <x-utils.form.input label="Ijazah" id="ijazah" type="checkbox" name="ijazah" :value="old('ijazah')"
                         required autofocus />
-                    <x-partials.input-error :messages="$errors->get('address')" />
+                    <x-partials.input-error :messages="$errors->get('ijazah')" />
                 </div>
             </div>
         @endif
