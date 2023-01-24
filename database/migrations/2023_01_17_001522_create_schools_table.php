@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');            
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('school_name');
             $table->string('school_phone')->nullable();
             $table->string('school_icon')->nullable();
             $table->string('school_address')->nullable();
             $table->string('city')->nullable();
-            $table->string('provice')->nullable();
+            $table->string('province')->nullable();
             $table->string('country')->nullable();
             $table->string('postcode')->nullable();
             $table->timestamps();

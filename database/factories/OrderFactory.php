@@ -30,11 +30,12 @@ class OrderFactory extends Factory
         $price_idn_amount = ($ijazah_idn_qty * $price_idn) + ($transkrip_idn_qty * $price_idn);
         $price_eng_amount = ($ijazah_eng_qty * $price_eng) + ($transkrip_eng_qty * $price_eng);
 
-        $user_id = User::where('role', 'User')->get()->random()->id;
+        $user_id = User::where('role', 'User')->inRandomOrder()->first()->id;
+        $document = Document::where('user_id', $user_id)->inRandomOrder()->first();
 
         return [
-            'user_id' => $user_id,
-            'document_id' => Document::where('user_id', $user_id)->get()->random()->id,
+            'user_id' => $this->faker->unique(true)->numberBetween(3,13),
+            'document_id' => $this->faker->unique(true)->numberBetween(1,10),
             'transaction_id' => rand(1111111111,9999999999),
             'ijazah_idn_qty' => $ijazah_idn_qty,
             'transkrip_idn_qty' => $transkrip_idn_qty,

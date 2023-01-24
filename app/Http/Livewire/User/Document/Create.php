@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use App\Http\Controllers\DocumentController;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -25,6 +26,7 @@ class Create extends Component implements HasForms
     public int $user_id;
     public $ijazah;
     public $transkrip;
+    public $statement_letter;
     public $graduated_at = '';
     
     protected function getFormSchema(): array
@@ -44,7 +46,6 @@ class Create extends Component implements HasForms
             Select::make('school_id')
                 ->label('Nama Sekolah')
                 ->options(School::all()->pluck('school_name', 'id'))
-                ->dehydrated(false)
                 ->disabled(),
             TextInput::make('student_id')
                 ->label('Nomor Induk Siswa (NIS)')
@@ -59,7 +60,7 @@ class Create extends Component implements HasForms
             FileUpload::make('ijazah')
                 ->label('Upload Ijazah')
                 ->acceptedFileTypes(['application/pdf','image/png','image/jpg','image/jpeg'])
-                ->helperText('Format file: pdf, png, jpg, dan jpeg ')
+                ->helperText('<p class="text-xs">Format file: pdf, png, jpg, dan jpeg<p/>')
                 ->disk('public')
                 ->directory('ijazah/'.$user_id)
                 ->preserveFilenames()
@@ -67,9 +68,17 @@ class Create extends Component implements HasForms
             FileUpload::make('transkrip')
                 ->label('Upload Transkrip')
                 ->acceptedFileTypes(['application/pdf','image/png','image/jpg','image/jpeg'])
-                ->helperText('Format file: pdf, png, jpg, dan jpeg ')
+                ->helperText('<p class="text-xs">Format file: pdf, png, jpg, dan jpeg<p/>')
                 ->disk('public')
                 ->directory('transkrip/'.$user_id)
+                ->preserveFilenames()
+                ->required(),
+            FileUpload::make('statement_letter')
+                ->label('Upload Surat Pernyataan Kepemilikan')
+                ->acceptedFileTypes(['application/pdf','image/png','image/jpg','image/jpeg'])
+                ->helperText('<p class="text-xs">Format file: pdf, png, jpg, dan jpeg<p/><br/>')
+                ->disk('public')
+                ->directory('statement_letter/'.$user_id)
                 ->preserveFilenames()
                 ->required(),
         ];
@@ -78,12 +87,12 @@ class Create extends Component implements HasForms
     public function mount(): void 
     {
         $user = Auth::user();
-        
         $this->form->fill([
             'user_id' => $user->id,
             'name' => $user->name,
             'school_id' => $user->profile->school_id,
             'student_id' => $user->profile->student_id,
+            'graduated_at' => $user->profile->graduated_at ? $user->profile->graduated_at : "",
         ]);
     }
     public function store(){
@@ -96,12 +105,22 @@ class Create extends Component implements HasForms
             'graduated_at' => $this->graduated_at
         ]);        
 
-        $message = "Tambah Data Dokumen Gagal";
+        $message = "Tambah Data Dokumen";
         if ($store) {
-            $message = "Tambah Data Dokumen Berhasil";
+            Notification::make() 
+                    ->title($message. ' Berhasil')
+                    ->success()
+                    ->duration(5000)
+                    ->send();
+                return redirect('/document');
+        }else {
+            Notification::make() 
+                ->title($message. ' Gagal')
+                ->body('Terdapat gangguan pada sistem')
+                ->danger()
+                ->duration(5000)
+                ->send();
         }
-            
-        return redirect('/document')->with('message',$message);
     }
 
     public function render()

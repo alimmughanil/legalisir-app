@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use App\Http\Controllers\DocumentController;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -102,17 +103,32 @@ class Edit extends Component implements HasForms
             if ($fileCheck) {
                 return Storage::disk('public')->download($this->old_ijazah);
             }else {
-                return redirect('/document')->with('message','Tidak dapat mengunduh dokumen');
+                Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak dapat mengunduh dokumen')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
             }
         } elseif ($type == 'transkrip') {
             $fileCheck = Storage::disk('public')->exists($this->old_transkrip);
             if ($fileCheck) {
                 return Storage::disk('public')->download($this->old_transkrip);
             }else {
-                return redirect('/document')->with('message','Tidak dapat mengunduh dokumen');
+                Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak dapat mengunduh dokumen')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
             }
         } else {
-            return redirect('/document')->with('message','Tidak ada file yang dipilih');
+            Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak ada file yang dipilih')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
         }
     }
 
@@ -141,12 +157,22 @@ class Edit extends Component implements HasForms
             'graduated_at' => $this->graduated_at
         ]);
 
-        $message = "Edit Data Dokumen Gagal";
+        $message = "Edit Data Dokumen ";
         if ($update) {
-            $message = "Edit Data Dokumen Berhasil";
+            Notification::make() 
+                    ->title($message. ' Berhasil')
+                    ->success()
+                    ->duration(5000)
+                    ->send();
+                return redirect('/document');
+        }else {
+            Notification::make() 
+                ->title($message. ' Gagal')
+                ->body('Terdapat gangguan pada sistem')
+                ->danger()
+                ->duration(5000)
+                ->send();
         }
-            
-        return redirect('/document')->with('message',$message);
     }
 
     public function render()

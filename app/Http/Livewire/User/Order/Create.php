@@ -23,6 +23,7 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Wizard\Step;
 use App\Http\Controllers\DocumentController;
@@ -48,7 +49,7 @@ class Create extends Component implements HasForms
     public string $full_address = "Belum ada alamat rumah yang ditambahkan";
     public string $address;
     public string $city;
-    public string $provice;
+    public string $province;
     public string $country;
     public string $postcode;
 
@@ -211,7 +212,7 @@ class Create extends Component implements HasForms
                     Wizard\Step::make('Pilih Metode Pembayaran')
                         ->schema($paymentFormData),
                     ])
-                    ->startOnStep(3)
+                    ->startOnStep(1)
                     ->submitAction(new HtmlString('<button type="submit" class="normal-case btn btn-primary btn-sm">Lanjut Pembayaran</button>'))
                 ];
 
@@ -234,10 +235,10 @@ class Create extends Component implements HasForms
         if ($this->user->profile) {
             $this->address = $this->user->profile->address;
             $this->city = $this->user->profile->city;
-            $this->provice = $this->user->profile->provice;
+            $this->province = $this->user->profile->province;
             $this->country = $this->user->profile->country;
             $this->postcode = $this->user->profile->postcode;
-            $this->full_address = $this->address . ', ' . $this->city . ', ' . $this->provice . ', ' . $this->country . ', ' . $this->postcode;
+            $this->full_address = $this->address . ', ' . $this->city . ', ' . $this->province . ', ' . $this->country . ', ' . $this->postcode;
         }
 
         $this->form->fill([
@@ -252,6 +253,22 @@ class Create extends Component implements HasForms
     }
     public function store(){
         dd($this->form->getState());
+        $update = true;
+        if ($update) {
+            Notification::make() 
+                    ->title($message. ' Berhasil')
+                    ->success()
+                    ->duration(5000)
+                    ->send();
+                return redirect('/order');
+        }else {
+            Notification::make() 
+                ->title($message. ' Gagal')
+                ->body('Terdapat gangguan pada sistem')
+                ->danger()
+                ->duration(5000)
+                ->send();
+        }
     }
     
     public function render()

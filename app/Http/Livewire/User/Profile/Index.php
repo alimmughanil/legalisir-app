@@ -33,11 +33,6 @@ class Index extends Component implements HasForms
     public $photoData;
     
     public function mount(): void {
-        Notification::make() 
-                    ->title('Update Password Berhasil')
-                    ->success()
-                    ->send();
-
         $this->user = Auth::user();
         $this->profile = $this->user->profile;
         $this->school = School::where('id',$this->profile->school_id)->first();
@@ -143,12 +138,22 @@ class Index extends Component implements HasForms
             'photo' => '/storage/' . $validatedData['photo']
         ]);        
 
-        $message = "Update Foto Profil Gagal";
+        $message = "Update Foto Profil";
         if ($update) {
-            $message = "Update Foto Profil Berhasil";
+            Notification::make() 
+                    ->title($message. ' Berhasil')
+                    ->success()
+                    ->duration(5000)
+                    ->send();
+                return redirect('/profile');
+        }else {
+            Notification::make() 
+                ->title($message. ' Gagal')
+                ->body('Terdapat gangguan pada sistem')
+                ->danger()
+                ->duration(5000)
+                ->send();
         }
-            
-        return redirect('/profile')->with('message',$message);
     }
     public function updateProfile()
     {
@@ -166,12 +171,22 @@ class Index extends Component implements HasForms
             'graduated_at' =>  $validatedData['graduated_at'],
         ]);        
 
-        $message = "Update Profil Gagal";
+        $message = "Update Profil";
         if ($update) {
-            $message = "Update Profil Berhasil";
+            Notification::make() 
+                    ->title($message. ' Berhasil')
+                    ->success()
+                    ->duration(5000)
+                    ->send();
+                return redirect('/profile');
+        }else {
+            Notification::make() 
+                ->title($message. ' Gagal')
+                ->body('Terdapat gangguan pada sistem')
+                ->danger()
+                ->duration(5000)
+                ->send();
         }
-            
-        return redirect('/profile')->with('message',$message);
     }
 
     public function updatePassword()
@@ -189,21 +204,24 @@ class Index extends Component implements HasForms
                 Notification::make() 
                     ->title('Update Password Berhasil')
                     ->success()
-                    ->duration(3000)
+                    ->duration(5000)
                     ->send();
+                return redirect('/profile');
             }else {
                 Notification::make() 
                     ->title('Update Password Gagal')
+                    ->body('Terdapat gangguan pada sistem')
                     ->danger()
-                    ->duration(3000)
+                    ->duration(5000)
                     ->send();
                 }
-            } else {
+        } else {
             Notification::make() 
-                ->title('Password lama tidak sesuai dengan catatan kami')
-                ->danger()
-                ->duration(3000)
-                ->send();
+            ->title('Update Password Gagal')
+            ->body('Password lama tidak sesuai dengan catatan kami')
+            ->danger()
+            ->duration(5000)
+            ->send();
         }
     }
 

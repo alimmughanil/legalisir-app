@@ -8,6 +8,10 @@
         </div>
     </div>
     <div class="w-full p-4 my-2 border shadow sm:w-[46rem] flex flex-col gap-4 max-h-[68vh] overflow-auto">
+        @if (Session::has('message'))
+            <p class="p-4 text-sm text-gray-100 bg-red-600 rounded-md shadow-sm">
+                {{ Session::get('message') }}</p>
+        @endif
         @if ($active == 'Ijazah')
             <div class="relative p-2 border rounded-md shadow-sm bg-gray-50">
                 @if (isset($document))

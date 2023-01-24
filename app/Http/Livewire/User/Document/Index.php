@@ -26,17 +26,32 @@ class Index extends Component
             if ($fileCheck) {
                 return Storage::disk('public')->download($this->ijazah);
             }else {
-                return redirect('/document')->with('message','Tidak dapat mengunduh dokumen');
+                Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak dapat mengunduh dokumen')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
             }
         } elseif ($type == 'transkrip') {
             $fileCheck = Storage::disk('public')->exists($this->transkrip);
             if ($fileCheck) {
                 return Storage::disk('public')->download($this->transkrip);
             }else {
-                return redirect('/document')->with('message','Tidak dapat mengunduh dokumen');
+                Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak dapat mengunduh dokumen')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
             }
         } else {
-            return redirect('/document')->with('message','Tidak ada file yang dipilih');
+            Notification::make() 
+                    ->title('Permintaan Gagal')
+                    ->body('Tidak ada file yang dipilih')
+                    ->danger()
+                    ->duration(5000)
+                    ->send();
         }
     }
     public function setActive($state){
@@ -46,7 +61,7 @@ class Index extends Component
     public function render()
     {
         $data = [
-            'title' => "Data Legalisir Ijazah"
+            'title' => "Data Dokumen"
         ];
 
         return view('livewire.user.document.index', compact('data'));

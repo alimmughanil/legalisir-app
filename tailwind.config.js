@@ -2,7 +2,6 @@ const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-    content: ["./resources/**/*.blade.php", "./vendor/filament/**/*.blade.php"],
     theme: {
         extend: {
             colors: {
@@ -23,6 +22,8 @@ module.exports = {
     },
     content: [
         "./app/**/*.php",
+        "./resources/**/*.blade.php",
+        "./vendor/filament/**/*.blade.php",
         "./resources/**/*.html",
         "./resources/**/*.js",
         "./resources/**/*.jsx",

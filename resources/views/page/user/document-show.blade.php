@@ -2,7 +2,7 @@
 @section('title', $data['title'])
 
 @section('content')
-    <x-navigation>
-        @livewire('user.document.show', $data)
+    <x-navigation role="User">
+        <livewire:user.document.show />
     </x-navigation>
 @endsection

@@ -19,15 +19,16 @@ class ProfileFactory extends Factory
     public function definition()
     {
         $school = School::all()->random();
+        $user = User::where('role', 'User')->get()->random();
         return [
-            'user_id' => $school->user_id,
-            'school_id' => $school->id,
+            'user_id' => $this->faker->unique(true)->numberBetween(3,13),
+            'school_id' => rand(1,2),
             'student_id' => rand(1111111111,9999999999),
             'graduated_at' => $this->faker->year('-'.rand(1,12).'years'),
             'photo' => "https://source.unsplash.com/random/100x100/?landscape",
             'address' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
-            'provice' => $this->faker->state(),
+            'province' => $this->faker->state(),
             'country' => $this->faker->country(),
             'postcode' => $this->faker->postcode(),
         ];

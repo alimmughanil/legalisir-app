@@ -17,10 +17,13 @@ class documentFactory extends Factory
      */
     public function definition()
     {
+        $user = User::where('role', 'User')->inRandomOrder()->first();
         return [
-            'user_id' => User::where('role', 'User')->get()->random()->id,
+            'user_id' => $this->faker->unique(true)->numberBetween(3,13),
+            'school_id' => rand(1,2),
             'ijazah' => 'https://source.unsplash.com/random/1280x720/?landscape',
             'transkrip' => 'https://source.unsplash.com/random/1280x720/?landscape',
+            'statement_letter' => 'https://source.unsplash.com/random/1280x720/?landscape',
             'status' => $this->faker->randomElement(['Pending', 'Confirm', 'Reject'])
         ];
     }

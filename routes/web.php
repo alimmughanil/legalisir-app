@@ -6,10 +6,11 @@ use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Livewire\Auth\Passwords\Email;
 
+use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
@@ -57,6 +58,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('/dashboard', DashboardController::class)->only('index');
+    Route::resource('/account', AccountController::class)->only('index');
     Route::resource('/profile', ProfileController::class)->only('index');
     Route::resource('/document', DocumentController::class)->only('index','create','show','edit');
     Route::resource('/order', OrderController::class)->only('index','create','show');

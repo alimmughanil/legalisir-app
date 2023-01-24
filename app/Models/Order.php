@@ -15,8 +15,11 @@ class Order extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function document(){
+        return $this->hasOne(Document::class, 'id', 'document_id');
+    }
 
     public function payment(){
-        return $this->hasOne(Payment::class, 'user_id', 'id');
+        return $this->hasOne(Payment::class, 'order_id', 'id');
     }
 }

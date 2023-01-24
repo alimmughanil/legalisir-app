@@ -86,6 +86,15 @@
                                         {{ $profile->graduated_at ? $profile->graduated_at : 'Tidak Ada' }}
                                     </p>
                                 </div>
+                                <div>
+                                    <p class="font-medium origin-left ">
+                                        Alamat Rumah
+                                    </p>
+                                    <p class="overflow-auto text-sm text-left scrollbar-none">
+                                        {{ $profile->address ? $profile->address . ', ' . $profile->city . ', ' . $profile->province . ' ' . $profile->postcode : 'Tidak Ada' }}
+                                    </p>
+                                </div>
+
                             </div>
                             <form wire:submit.prevent="updateProfile"
                                 class="{{ $isEdit == 'profile' ? 'w-full flex flex-col items-center justify-center gap-2' : 'hidden' }}">

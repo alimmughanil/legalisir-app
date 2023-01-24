@@ -2,7 +2,7 @@
 @section('title', $data['title'])
 
 @section('content')
-    <x-navigation>
-        @livewire('user.order.create', $data)
+    <x-navigation role="User">
+        <livewire:user.order.create />
     </x-navigation>
 @endsection

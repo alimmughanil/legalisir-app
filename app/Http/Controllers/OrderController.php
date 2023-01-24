@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -13,11 +15,27 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $data = [
-            'title' => "Pesanan Saya"
-        ];
+        if (Auth::check()) {
+            if (Auth::user()->role == "User") {
+                $data = [
+                    'title' => "Pesanan Saya"
+                ];
 
-        return view('page.user.order-index', compact('data'));
+                return view('page.user.order-index', compact('data'));
+            }
+
+            elseif (Auth::user()->role == "Admin") {
+                $data = [
+                    'title' => "Data Pesanan"
+                ];
+                return view('page.admin.order-index', compact('data'));
+            }
+            else {
+                return abort(401);
+            }
+        } else{
+            return redirect('/login');
+        };
     }
 
     /**
@@ -27,10 +45,19 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $data = [
-            'title'=>'Buat Pesanan Legalisir Dokumen'
-        ];
-        return view('page.user.order-create', compact('data'));
+        $user_id = Auth::user()->id;
+        $document = Document::where('user_id',$user_id)->with('user.profile.school')->first();
+        if ($document) {
+            if ($document->status == "Pending") {
+                return redirect('/document')->with('message', 'Validasi Dokumen Sedang Diproses');
+            }
+            $data = [
+                'title'=>'Buat Pesanan Legalisir Dokumen'
+            ];
+            return view('page.user.order-create', compact('data'));
+        } else {
+            return redirect('/document/create')->with('message', 'Silahkan Isi Data Dokumen Terlebih Dahulu');
+        }
     }
 
     /**

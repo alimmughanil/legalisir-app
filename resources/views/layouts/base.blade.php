@@ -35,6 +35,8 @@
 
 <body class="antialiased">
     @yield('body')
+
+    @livewire('notifications')
 </body>
 
 </html>

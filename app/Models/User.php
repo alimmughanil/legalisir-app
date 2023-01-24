@@ -48,7 +48,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $with = ['profile'];
+    protected $with = ['profile','school'];
 
     public function profile(){
         return $this->hasOne(Profile::class, 'user_id', 'id');
@@ -57,7 +57,7 @@ class User extends Authenticatable
         return $this->hasOne(Document::class, 'user_id', 'id');
     }
     public function school(){
-        return $this->hasOne(School::class);
+        return $this->hasOne(School::class, 'user_id', 'id');
     }
     public function order(){
         return $this->hasOne(Order::class, 'user_id', 'id');

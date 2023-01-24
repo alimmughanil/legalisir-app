@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('school_id');
             $table->string('ijazah')->nullable();
             $table->string('transkrip')->nullable();
+            $table->string('statement_letter')->nullable();
             $table->enum('status', ['Pending', 'Confirm', 'Reject'])->default('Pending');
             $table->timestamps();
         });

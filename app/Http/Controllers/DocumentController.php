@@ -15,13 +15,33 @@ class DocumentController extends Controller
 {
     public function index()
     {
-        $user_id = Auth::user()->id;
-        $document = Document::where('user_id',$user_id)->with('user.profile.school')->first();
-        $data = [
-            'title' => "Data Dokumen",
-            'document'=>$document
-        ];
-        return view('page.user.document-index', compact('data'));
+        if (Auth::check()) {
+            if (Auth::user()->role == "User") {
+                $user_id = Auth::user()->id;
+                $document = Document::where('user_id',$user_id)->with('user.profile.school')->first();
+                if ($document) {
+                    $data = [
+                        'title' => "Data Dokumen",
+                        'document'=>$document
+                    ];
+                    return view('page.user.document-index', compact('data'));
+                } else {
+                    return redirect('/document/create')->with('message', 'Silahkan Isi Data Dokumen Terlebih Dahulu');
+                }
+            }
+
+            elseif (Auth::user()->role == "Admin") {
+                $data = [
+                    'title' => "Data Dokumen",
+                ];
+                return view('page.admin.document-index', compact('data'));
+            }
+            else {
+                return abort(401);
+            }
+        } else{
+            return redirect('/login');
+        };
     }
 
     /**
