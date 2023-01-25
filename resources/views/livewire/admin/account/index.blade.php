@@ -31,9 +31,14 @@
                         <td class="whitespace-normal">
                             {{ $graduatedUser->profile->address ? $graduatedUser->profile->address : 'Tidak Ada' }}</td>
                         <td>
-                            <a href="" class="btn btn-sm btn-circle btn-ghost">
-                                <i class="text-xl text-green-600 fab fa-whatsapp"></i>
-                            </a>
+                            @if ($graduatedUser->profile->phone)
+                                <a href="https://wa.me/62{{ substr($graduatedUser->profile->phone, 1) }}"
+                                    class="btn btn-sm btn-circle btn-ghost">
+                                    <i class="text-xl text-green-600 fab fa-whatsapp"></i>
+                                </a>
+                            @else
+                                <p>No Action</p>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

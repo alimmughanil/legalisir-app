@@ -51,6 +51,9 @@ class OrderController extends Controller
             if ($document->status == "Pending") {
                 return redirect('/document')->with('message', 'Validasi Dokumen Sedang Diproses');
             }
+            if ($document->status == "Reject") {
+                return redirect('/document')->with('message', 'Pengajuan dokumen ditolak, mohon edit dokumen anda dengan benar');
+            }
             $data = [
                 'title'=>'Buat Pesanan Legalisir Dokumen'
             ];

@@ -122,7 +122,6 @@ class Index extends Component implements HasForms
         ];
     }
 
-
     public function updatePhoto()
     {
         $validatedData = $this->photoForm->getState();

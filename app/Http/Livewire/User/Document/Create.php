@@ -13,7 +13,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
-use App\Http\Controllers\DocumentController;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class Create extends Component implements HasForms

@@ -218,7 +218,7 @@
             <a href="#" class="btn btn-outline">
                 Tidak
             </a>
-            <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn">
+            <button onclick="logout()" id="logoutBtn" class="btn">
                 Ya
             </button>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -233,6 +233,12 @@
         function collapseMenu(params) {
             const orderMenu = document.getElementById('orderMenu');
             orderMenu.classList.toggle('hidden');
+        }
+
+        function logout() {
+            event.preventDefault();
+            document.getElementById('logoutBtn').disabled = true
+            document.getElementById('logout-form').submit();
         }
     </script>
 @endpush

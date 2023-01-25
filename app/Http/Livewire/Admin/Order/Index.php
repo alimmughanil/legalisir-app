@@ -17,10 +17,15 @@ class Index extends Component
     {
         $this->user = Auth::user();
         $this->school = School::where('user_id', $this->user->id)->first();
-        $this->orders = Order::with('user', 'document')
+        $orders = Order::with('user', 'document')
             ->whereHas('user.profile', function($q){
                 $q->where('school_id', $this->school->id);
-            })->get();
+            });
+
+        if (request()->status) {
+            $this->orders = $orders->where('status', request()->status)->get();
+        }
+        $this->orders = $orders->get();
     }
     public function render()
     {

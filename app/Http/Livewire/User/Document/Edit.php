@@ -28,6 +28,9 @@ class Edit extends Component implements HasForms
     public int $user_id;
     public $old_ijazah;
     public $old_transkrip;
+    public $old_statement_letter;
+
+    public $statement_letter;
     public $ijazah;
     public $transkrip;
     public $editDocument;
@@ -36,9 +39,7 @@ class Edit extends Component implements HasForms
     protected function getFormSchema(): array
     {
         $user_id = Auth::user()->id;
-        $ijazahFileName = $user_id.'-ijazah-'. Str::random(16);
-        $transkripFileName = $user_id.'-transkrip-'. Str::random(16);
-
+        
         return [
             TextInput::make('user_id')
                 ->label('User Id')
@@ -75,6 +76,14 @@ class Edit extends Component implements HasForms
                 ->disk('public')
                 ->directory('transkrip/'.$user_id)
                 ->preserveFilenames(),
+            FileUpload::make('statement_letter')
+                ->label('Upload Surat Pernyataan Kepemilikan')
+                ->acceptedFileTypes(['application/pdf','image/png','image/jpg','image/jpeg'])
+                ->helperText('<p class="text-xs">Format file: pdf, png, jpg, dan jpeg<p/><br/>')
+                ->disk('public')
+                ->directory('statement_letter/'.$user_id)
+                ->preserveFilenames()
+                ->required(),
         ];
     }
 
@@ -90,6 +99,7 @@ class Edit extends Component implements HasForms
             'graduated_at' => $user->profile->graduated_at,
             'old_ijazah' => $this->document->ijazah,
             'old_transkrip' => $this->document->transkrip,
+            'old_statement_letter' => $this->document->statement_letter,
         ]);
     }
 
@@ -136,6 +146,7 @@ class Edit extends Component implements HasForms
         $data = [
             'ijazah' => $this->old_ijazah,
             'transkrip' => $this->old_transkrip,
+            'statement_letter' => $this->old_statement_letter,
             'status' => "Pending"
         ];
         $newData = $this->form->getState();
@@ -147,6 +158,10 @@ class Edit extends Component implements HasForms
         if ($newData['transkrip']) {
             $data['transkrip'] = $newData['transkrip'];
             Storage::disk('public')->delete($this->old_transkrip);
+        }
+        if ($newData['statement_letter']) {
+            $data['statement_letter'] = $newData['statement_letter'];
+            Storage::disk('public')->delete($this->old_statement_letter);
         }
 
         $document = Document::where('id',$id)->first();

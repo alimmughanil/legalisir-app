@@ -1,6 +1,6 @@
 <div>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <a href="/document" class="p-4 border shadow-md rounded-2xl hover:border-gray-600 hover:shadow-lg">
+        <a href="/document?status=pending" class="p-4 border shadow-md rounded-2xl hover:border-gray-600 hover:shadow-lg">
             <div class="flex flex-row items-center justify-center gap-2 mb-2">
                 <i class="text-2xl text-gray-600 fas fa-clock"></i>
                 <div class="text-3xl font-bold">{{ $documentValidation }}</div>
@@ -21,7 +21,7 @@
             </div>
             <div class="text-xs font-semibold text-center">Semua Transaksi</div>
         </a>
-        <a href="/order?sort=created_at" class="p-4 border shadow-md rounded-2xl hover:border-gray-600 hover:shadow-lg">
+        <a href="/order?status=pending" class="p-4 border shadow-md rounded-2xl hover:border-gray-600 hover:shadow-lg">
             <div class="flex flex-row items-center justify-center gap-2 mb-2">
                 <i class="text-2xl text-gray-600 fas fa-clipboard"></i>
                 <div class="text-3xl font-bold">{{ $orderConfirm }}</div>
