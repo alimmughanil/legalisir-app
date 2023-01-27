@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('province',[AddressAPIController::class, 'getProvince'])->name('get.province');
+Route::get('address/search',[AddressAPIController::class, 'getAddressByUrban'])->name('search.address');

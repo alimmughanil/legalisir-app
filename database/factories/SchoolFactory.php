@@ -23,7 +23,7 @@ class SchoolFactory extends Factory
             'school_icon' => "https://source.unsplash.com/random/100x100/?landscape",
             'school_address' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
-            'provice' => $this->faker->state(),
+            'province' => $this->faker->state(),
             'country' => $this->faker->country(),
             'postcode' => $this->faker->postcode(),
         ];

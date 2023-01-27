@@ -11,9 +11,9 @@
                 <div class="pr-1 dropdown dropdown-end">
                     <label tabIndex="0" class="btn btn-ghost btn-circle avatar">
                         <div class="w-10 normal-case border-2 rounded-full">
-                            @if (Auth::check() && Auth::user()->role == 'User')
+                            @if (Auth::user()->role == 'User')
                                 <img src="{{ Auth::user()->profile->photo }}" class="w-10 rounded-full" alt="Avatar">
-                            @elseif (Auth::check() && Auth::user()->role == 'Admin')
+                            @elseif (Auth::user()->role == 'Admin')
                                 <img src="{{ Auth::user()->school->school_icon }}" class="w-10 rounded-full"
                                     alt="Avatar">
                             @else
@@ -29,10 +29,10 @@
                                         <div class="flex flex-row items-start gap-x-3">
                                             <div class="avatar">
                                                 <div class="w-10 h-10 border-2 rounded-full">
-                                                    @if (Auth::check() && Auth::user()->role == 'User')
+                                                    @if (Auth::user()->role == 'User')
                                                         <img src="{{ Auth::user()->profile->photo }}"
                                                             class="w-10 rounded-full" alt="Avatar">
-                                                    @elseif (Auth::check() && Auth::user()->role == 'Admin')
+                                                    @elseif (Auth::user()->role == 'Admin')
                                                         <img src="{{ Auth::user()->school->school_icon }}"
                                                             class="w-10 rounded-full" alt="Avatar">
                                                     @else

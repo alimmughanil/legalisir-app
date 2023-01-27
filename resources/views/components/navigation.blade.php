@@ -161,10 +161,10 @@
                     <div class="dropdown dropdown-end">
                         <label tabIndex="0" class="btn btn-ghost btn-circle avatar">
                             <div class="normal-case border-2 rounded-full w-11">
-                                @if (Auth::check() && Auth::user()->role == 'User')
+                                @if (Auth::user()->role == 'User')
                                     <img src="{{ Auth::user()->profile->photo }}" class="w-10 rounded-full"
                                         alt="Avatar">
-                                @elseif (Auth::check() && Auth::user()->role == 'Admin')
+                                @elseif (Auth::user()->role == 'Admin')
                                     <img src="{{ Auth::user()->school->school_icon }}" class="w-10 rounded-full"
                                         alt="Avatar">
                                 @else

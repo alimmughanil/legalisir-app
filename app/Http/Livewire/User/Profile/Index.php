@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\User\Profile;
 
+use App\Http\Controllers\AddressAPIController;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Profile;
@@ -26,10 +27,12 @@ class Index extends Component implements HasForms
     // form properties
     public $photo, $name, $email, $phone, 
         $school_id, $student_id, $graduated_at,
+        $address, $urban, $subdistrict, $city, $province, $postcode,
         $old_password, $password, $passwordConfirmation;
 
     // state properties
-    public $isEdit;
+    public $isEdit = 'profile';
+    public $addressInputMethod = '';
     public $photoData;
     
     public function mount(): void {
@@ -222,6 +225,13 @@ class Index extends Component implements HasForms
             ->duration(5000)
             ->send();
         }
+    }
+
+    public function searchAddress($value){
+        $addressApiController = new AddressAPIController;
+        $searchAddress = $addressApiController->getAddressByUrban($value);
+        dump($value, $searchAddress);
+        // return $this->urban =  ;
     }
 
     public function render()
