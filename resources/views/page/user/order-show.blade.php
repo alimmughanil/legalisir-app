@@ -3,6 +3,6 @@
 
 @section('content')
     <x-navigation role="User">
-        <livewire:user.order.show />
+        <livewire:user.order.show :order="$data['order']" />
     </x-navigation>
 @endsection

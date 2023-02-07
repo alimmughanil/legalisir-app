@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,7 +83,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::where('id', $id)->first();
+        $data = [
+            'title'=>'Pesanan Legalisir Dokumen',
+            'order'=>$order,
+        ];
+        return view('page.user.order-show', compact('data'));
     }
 
     /**

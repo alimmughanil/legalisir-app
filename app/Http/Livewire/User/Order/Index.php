@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Index extends Component
 {
     public $active = "showAll";
-    public $user, $orderPending, $orderConfirm, $orderDelivery, $orderTotal;
+    public $user, $orderPending, $orderConfirm, $orderProcess, $orderDelivery, $orderTotal;
 
     public function __construct(){
         $request = new Request;
@@ -25,6 +25,9 @@ class Index extends Component
                 ->get();
         $this->orderConfirm = Order::where('user_id', $this->user->id)
                 ->where('status','Confirm')
+                ->get();
+        $this->orderProcess = Order::where('user_id', $this->user->id)
+                ->where('status','Processing')
                 ->get();
         $this->orderDelivery = Order::where('user_id', $this->user->id)
                 ->where('status','Delivery')

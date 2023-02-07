@@ -21,22 +21,22 @@ class PaymentFactory extends Factory
         $user = User::where('role', 'User')->inRandomOrder()->first();
         $order = Order::where('user_id', $user->id)->inRandomOrder()->first();
 
-        $statusPayment = ['Success','Failed'];
+        $statusPayment = ['Paid','Unpaid'];
         // if ($order) {
         //     if ($order->status == "Pending") {
         //         $statusPayment = ['Pending'];
         //     }
         //     if ($order->status == "Confirm") {
-        //         $statusPayment = ['Success'];
+        //         $statusPayment = ['Paid'];
         //     }
         //     if ($order->status == "Delivery") {
-        //         $statusPayment = ['Success'];
+        //         $statusPayment = ['Paid'];
         //     }
-        //     if ($order->status == "Success") {
-        //         $statusPayment = ['Success'];
+        //     if ($order->status == "Paid") {
+        //         $statusPayment = ['Paid'];
         //     }
-        //     if ($order->status == "Failed") {
-        //         $statusPayment = ['Success','Failed'];
+        //     if ($order->status == "Unpaid") {
+        //         $statusPayment = ['Paid','Unpaid'];
         //     }
         // }
 

@@ -13,6 +13,7 @@
         "filament/notifications": "^2.0",
         "filament/tables": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "kavist/rajaongkir": "^1.1",
         "laravel-frontend-presets/tall": "^5.0",
         "laravel/framework": "9.21.6",
         "laravel/sanctum": "^3.0",

@@ -13,11 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('shipments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('order_id')->constrained('orders');
-            $table->enum('status', ['Pending','Paid','Unpaid'])->default('Pending');
+            $table->foreignId('origin_address_id');
+            $table->foreignId('destination_address_id');
+            $table->string('courier_type');
+            $table->string('courier_service');
+            $table->string('courier_price');
+            $table->enum('status', ['Pending','Delivery','Success','Failed'])->default('Pending');
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('shipments');
     }
 };

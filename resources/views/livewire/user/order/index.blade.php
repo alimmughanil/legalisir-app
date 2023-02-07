@@ -3,12 +3,14 @@
         <div class="flex flex-row max-w-full gap-2 px-4">
             <button class="btn normal-case {{ $active == 'showAll' ? '' : 'btn-outline' }}"
                 wire:click="setOrderTabActive('showAll')">Semua Pesanan</button>
-            <button class="btn normal-case {{ $active == 'payment' ? '' : 'btn-outline' }}"
-                wire:click="setOrderTabActive('payment')">Belum Dibayar</button>
+            <button class="btn normal-case {{ $active == 'pending' ? '' : 'btn-outline' }}"
+                wire:click="setOrderTabActive('pending')">Belum Dibayar</button>
+            <button class="btn normal-case {{ $active == 'confirm' ? '' : 'btn-outline' }}"
+                wire:click="setOrderTabActive('confirm')">Menunggu Konfirmasi</button>
             <button class="btn normal-case {{ $active == 'processing' ? '' : 'btn-outline' }}"
                 wire:click="setOrderTabActive('processing')">Sedang Diproses</button>
             <button class="btn normal-case {{ $active == 'delivery' ? '' : 'btn-outline' }}"
-                wire:click="setOrderTabActive('shipment')">Sedang Dikirim</button>
+                wire:click="setOrderTabActive('delivery')">Sedang Dikirim</button>
         </div>
     </div>
     <div
@@ -66,6 +68,10 @@
                                 $statusLabel = 'Belum Dibayar';
                             }
                             if ($order->status == 'Confirm') {
+                                $statusClass = 'badge-outline';
+                                $statusLabel = 'Menunggu Konfirmasi';
+                            }
+                            if ($order->status == 'Processing') {
                                 $statusClass = 'text-white bg-blue-600 border-blue-600';
                                 $statusLabel = 'Sedang Diproses';
                             }
@@ -92,7 +98,7 @@
                 <p class="text-center">Belum ada data yang dapat ditampilkan</p>
             @endif
         @endif
-        @if ($active == 'payment')
+        @if ($active == 'pending')
             @if (count($orderPending) > 0)
                 @foreach ($orderPending as $order)
                     <div class="relative p-2 border rounded-md shadow-sm sm:p4 bg-gray-50">
@@ -155,7 +161,7 @@
                 <p class="text-center">Belum ada data yang dapat ditampilkan</p>
             @endif
         @endif
-        @if ($active == 'processing')
+        @if ($active == 'confirm')
             @if (count($orderConfirm) > 0)
                 @foreach ($orderConfirm as $order)
                     <div class="relative p-2 border rounded-md shadow-sm sm:p4 bg-gray-50">
@@ -202,9 +208,72 @@
                         </div>
 
                         @php
-                            $statusClass = '';
+                            $statusClass = 'badge-outline';
                             $statusLabel = '';
                             if ($order->status == 'Confirm') {
+                                $statusLabel = 'Menunggu Konfirmasi';
+                            }
+                        @endphp
+                        <div class="flex flex-row items-start justify-between mt-4">
+                            <div class="font-medium badge {{ $statusClass }}">{{ $statusLabel }}</div>
+                            <div class="font-medium">{{ date('d-m-Y', strtotime($order->updated_at)) }}</div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p class="text-center">Belum ada data yang dapat ditampilkan</p>
+            @endif
+        @endif
+        @if ($active == 'processing')
+            @if (count($orderProcess) > 0)
+                @foreach ($orderProcess as $order)
+                    <div class="relative p-2 border rounded-md shadow-sm sm:p4 bg-gray-50">
+                        <div class="absolute font-medium right-2">
+                            Rp{{ number_format($order->price_amount, 0, ',', '.') }}
+                        </div>
+                        <div class="text-lg font-semibold">Legalisir Dokumen</div>
+                        <div class="text-xs text-gray-500">ID Transaksi: {{ $order->transaction_id }}</div>
+                        <div class="flex flex-col sm:flex-row sm:gap-8">
+                            @if ($order->ijazah_idn_qty || $order->transkrip_idn_qty)
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-700">Translasi Bahasa Indonesia</p>
+                                    @if ($order->ijazah_idn_qty)
+                                        <div class="text-sm text-gray-600">
+                                            <i class="scale-50 fas fa-circle"></i>
+                                            <span>Ijazah ({{ $order->ijazah_idn_qty }} Lembar)</span>
+                                        </div>
+                                    @endif
+                                    @if ($order->transkrip_idn_qty)
+                                        <div class="text-sm text-gray-600">
+                                            <i class="scale-50 fas fa-circle"></i>
+                                            <span>Transkrip Nilai ({{ $order->transkrip_idn_qty }} Lembar)</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                            @if ($order->ijazah_eng_qty || $order->transkrip_eng_qty)
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-700">Translasi Bahasa Inggris</p>
+                                    @if ($order->ijazah_eng_qty)
+                                        <div class="text-sm text-gray-600">
+                                            <i class="scale-50 fas fa-circle"></i>
+                                            <span>Ijazah ({{ $order->ijazah_eng_qty }} Lembar)</span>
+                                        </div>
+                                    @endif
+                                    @if ($order->transkrip_eng_qty)
+                                        <div class="text-sm text-gray-600">
+                                            <i class="scale-50 fas fa-circle"></i>
+                                            <span>Transkrip Nilai ({{ $order->transkrip_eng_qty }} Lembar)</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+
+                        @php
+                            $statusClass = '';
+                            $statusLabel = '';
+                            if ($order->status == 'Processing') {
                                 $statusClass = 'text-white bg-blue-600 border-blue-600';
                                 $statusLabel = 'Sedang Diproses';
                             }

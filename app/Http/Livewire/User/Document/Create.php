@@ -19,10 +19,10 @@ class Create extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public string $name;
-    public int $school_id;
-    public string $student_id;
-    public int $user_id;
+    public $name;
+    public $school_id;
+    public $student_id;
+    public $user_id;
     public $ijazah;
     public $transkrip;
     public $statement_letter;
@@ -89,9 +89,9 @@ class Create extends Component implements HasForms
         $this->form->fill([
             'user_id' => $user->id,
             'name' => $user->name,
-            'school_id' => $user->profile->school_id,
-            'student_id' => $user->profile->student_id,
-            'graduated_at' => $user->profile->graduated_at ? $user->profile->graduated_at : "",
+            'school_id' => $user->profile?->school_id,
+            'student_id' => $user->profile?->student_id,
+            'graduated_at' => $user->profile?->graduated_at ? $user->profile->graduated_at : "",
         ]);
     }
     public function store(){

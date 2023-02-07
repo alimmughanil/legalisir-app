@@ -15,6 +15,14 @@ class DocumentSeeder extends Seeder
      */
     public function run()
     {
-        Document::factory()->count(2)->create();
+        // Document::factory()->count(2)->create();
+        Document::create([
+            'user_id' => 4,
+            'school_id' => 1,
+            'ijazah' => 'https://source.unsplash.com/random/1280x720/?landscape',
+            'transkrip' => 'https://source.unsplash.com/random/1280x720/?landscape',
+            'statement_letter' => 'https://source.unsplash.com/random/1280x720/?landscape',
+            'status' => 'Confirm'
+        ]);
     }
 }

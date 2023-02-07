@@ -6,12 +6,9 @@ use Livewire\Component;
 
 class Show extends Component
 {
+    public $order;
     public function render()
     {
-        $data = [
-            'title' => "Data Pesanan Spesifik"
-        ];
-
-        return view('livewire.user.order.show', compact('data'));
+        return view('livewire.user.order.show');
     }
 }

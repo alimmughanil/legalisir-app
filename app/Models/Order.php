@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Payment;
+use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,5 +22,8 @@ class Order extends Model
 
     public function payment(){
         return $this->hasOne(Payment::class, 'order_id', 'id');
+    }
+    public function shipment(){
+        return $this->hasOne(Shipment::class, 'order_id', 'id');
     }
 }

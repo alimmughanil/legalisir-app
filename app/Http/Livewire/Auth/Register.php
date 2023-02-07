@@ -27,7 +27,11 @@ class Register extends Component implements HasForms
     public string $email;
     public string $password;   
     public string $passwordConfirmation; 
+    public $activeSchool;
 
+    public function __construct(){
+        $this->activeSchool = School::all()->pluck('school_name', 'id');
+    }
     protected function getFormSchema(): array
     {
         return [
@@ -36,7 +40,7 @@ class Register extends Component implements HasForms
                 ->required(),
             Select::make('school_id')
                 ->label('Sekolah')
-                ->options(School::all()->pluck('school_name', 'id'))
+                ->options($this->activeSchool)
                 ->searchable()
                 ->required(),
             TextInput::make('student_id')

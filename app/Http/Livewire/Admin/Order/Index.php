@@ -11,8 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
+    public $filter;
     public $user, $orders, $documents, $school, $i = 1;
     
+    public function updatedFilter(){
+        if ($this->filter == 'all') {
+            return redirect('/order');
+        }else {
+            return redirect('/order?status='.$this->filter);
+        }
+    }
+
     public function __construct()
     {
         $this->user = Auth::user();

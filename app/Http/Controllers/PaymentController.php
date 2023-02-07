@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -45,7 +46,16 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Payment::where('id', $id)->with('order')->first();
+        if ($payment) {
+            $data = [
+                'title'=>'Lanjutkan Pembayaran',
+                'payment'=>$payment,
+            ];
+            return view('page.user.payment-show', compact('data'));
+        } else {
+            abort(404, 'Transaksi Pemesanan Legalisir Dokumen Tidak Ditemukan');
+        }
     }
 
     /**

@@ -16,16 +16,12 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('address_id')->nullable();
             $table->foreignId('school_id');
-            $table->string('phone')->nullable();
             $table->string('student_id');
-            $table->string('graduated_at')->nullable();
+            $table->string('phone')->nullable();
             $table->longText('photo');
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('province')->nullable();
-            $table->string('country')->nullable();
-            $table->string('postcode')->nullable();
+            $table->string('graduated_at')->nullable();
             $table->timestamps();
         });
     }

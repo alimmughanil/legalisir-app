@@ -2,265 +2,265 @@
 
 namespace App\Http\Livewire\User\Order;
 
-use Closure;
+use App\Models\Order;
 use App\Models\School;
+use App\Models\Payment;
 use App\Models\Profile;
 use Livewire\Component;
 use App\Models\Document;
-use Illuminate\Support\Str;
-use Illuminate\Support\HtmlString;
-use App\Forms\Components\LabelOnly;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Radio;
+use App\Models\Shipment;
+use App\Models\RajaOngkirAddress;
+use Kavist\RajaOngkir\RajaOngkir;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Wizard;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Repeater;
-use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Wizard\Step;
-use App\Http\Controllers\DocumentController;
-use Filament\Forms\Components\TextInput\Mask;
 use Filament\Forms\Concerns\InteractsWithForms;
+
 
 class Create extends Component implements HasForms
 {   
     use InteractsWithForms;
-
-    public string $name;
-    public int $school_id;
-    public string $student_id;
-    public string $graduated_at;
+      
+    public $active = 1, $addressEdit = false;
+    public $disableOption = [2,3];
     public $user;
-    public $old_ijazah;
-    public $old_transkrip;
-    public $ijazah;
-    public $transkrip;
-    public $editDocument;
-    public $document;
-    public $delivery_method = "home";
-    public string $full_address = "Belum ada alamat rumah yang ditambahkan";
-    public string $address;
-    public string $city;
-    public string $province;
-    public string $country;
-    public string $postcode;
+    public $cityByProvince, $provinceList, $courierServiceList, $courierTypeList;
 
-    public $is_ijazah_idn = false;
-    public $is_transkrip_idn = false;
-    public $is_ijazah_eng = false;
-    public $is_transkrip_eng = false;
+    public $ijazah_idn_qty = 5, $ijazah_eng_qty = 0, $transkrip_idn_qty = 0, $transkrip_eng_qty = 0, $document_price = 10000,
+           $name, $phone,$email, $price_amount,
+           $school_address, $province_destination, $city_destination, $postcode, $address, $province_id, $city_id, $province, $city,
+           $courier_type, $courier_service, $courier_price, $payment_method = 'auto';
     
-    public int $document_id;
-    public $ijazah_idn = 0;
-    public $transkrip_idn = 0;
-    public $ijazah_eng = 0;
-    public $transkrip_eng = 0;
-
-    public $price_amount = 0;
-    
-    protected function getFormSchema(): array
+    public function __construct()
     {
-        $ijazahFileName = $this->user->id.'-ijazah-'. Str::random(16);
-        $transkripFileName = $this->user->id.'-transkrip-'. Str::random(16);
-
-        $nameForm = TextInput::make('name')
-                ->label('Nama Pemesan')
-                ->required();
-        $phoneForm = TextInput::make('phone')
-                ->label('Nomor Handphone')
-                ->tel()
-                ->telRegex('/^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/')
-                ->required();
-
-        $deliveryMethodForm = Radio::make('delivery_method')
-                ->label('Metode Pengiriman')
-                ->options([
-                    'school' => 'Ambil di Alamat Sekolah',
-                    'home' => 'Kirim ke Alamat Rumah',
-                ])->reactive()
-                ->afterStateUpdated(fn ($state) => $this->delivery_method = $state);
-
-        $addressForm = TextInput::make('address')
-                ->label('Alamat Rumah')
-                ->required();
-        $AddressExistLabel = LabelOnly::make('address')
-                ->label('Alamat Rumah')
-                ->helperText($this->full_address);
-
-        $isIjazahIdnForm = Checkbox::make('is_ijazah_idn')
-                ->label('Ijazah')
-                ->hint('Rp2000 Perlembar')
-                ->reactive()
-                ->afterStateUpdated(fn ($state) => $this->is_ijazah_idn = $state);
-        $ijazahIdnForm = TextInput::make('ijazah_idn')
-                ->label('Jumlah Lembar')
-                ->extraAttributes(['class' => 'w-20'])
-                ->numeric()
-                ->rules('min:1')
-                ->hidden(fn()=>$this->is_ijazah_idn == false)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn ($state) => $this->ijazah_idn = $state);
-
-        $isIjazahEngForm = Checkbox::make('is_ijazah_eng')
-                ->label('Ijazah')
-                ->reactive()
-                ->hint('Rp4000 Perlembar')
-                ->afterStateUpdated(fn ($state) => $this->is_ijazah_eng = $state);
-        $ijazahEngForm = TextInput::make('ijazah_eng')
-                ->label('Jumlah Lembar')
-                ->extraAttributes(['class' => 'w-20'])
-                ->numeric()
-                ->rules('min:1')
-                ->hidden(fn()=>$this->is_ijazah_eng == false)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn ($state) => $this->ijazah_eng = $state);
-
-        $isTranskripIdnForm = Checkbox::make('is_transkrip_idn')
-                ->label('Transkrip')
-                ->reactive()
-                ->hint('Rp2000 Perlembar')
-                ->afterStateUpdated(fn ($state) => $this->is_transkrip_idn = $state);
-        $transkripIdnForm = TextInput::make('transkrip_idn')
-                ->label('Jumlah Lembar')
-                ->extraAttributes(['class' => 'w-20'])
-                ->numeric()
-                ->rules('min:1')
-                ->hidden(fn()=>$this->is_transkrip_idn == false)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn ($state) => $this->transkrip_idn = $state);
-
-        $isTranskripEngForm = Checkbox::make('is_transkrip_eng')
-                ->label('Transkrip')
-                ->reactive()
-                ->hint('Rp4000 Perlembar')
-                ->afterStateUpdated(fn ($state) => $this->is_transkrip_eng = $state);
-        $transkripEngForm = TextInput::make('transkrip_eng')
-                ->label('Jumlah Lembar')
-                ->extraAttributes(['class' => 'w-20'])
-                ->numeric()
-                ->rules('min:1')
-                ->hidden(fn()=>$this->is_transkrip_eng == false)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn ($state) => $this->transkrip_eng = $state);
-        $documentConfirmationForm = LabelOnly::make('document_confirmation')
-                ->label('Total dokumen yang dipesan')
-                ->helperText(
-                    '('.$this->ijazah_idn.') Ijazah Bahasa Indonesia <br/>' .
-                    '('.$this->ijazah_eng.') Ijazah Bahasa Inggris <br/>' .
-                    '('.$this->transkrip_idn.') Transkrip Nilai Bahasa Indonesia <br/>' .
-                    '('.$this->transkrip_eng.') Transkrip Nilai Bahasa Inggris <br/>'
-                );
-        $priceAmoutForm = LabelOnly::make('payment_method_label')
-                ->label('Pilih Metode Pembayaran');
-        
-        $orderFormData = [
-            $nameForm,
-            $phoneForm,
-            $deliveryMethodForm
-        ];
-
-        $documentFormData = [                
-            Fieldset::make('Translasi Bahasa Indonesia')
-                ->schema([
-                    $isIjazahIdnForm, 
-                    $ijazahIdnForm, 
-
-                    $isTranskripIdnForm, 
-                    $transkripIdnForm,
-                ]),
-
-            Fieldset::make('Translasi Bahasa Inggris')
-                ->schema([
-                    $isIjazahEngForm, 
-                    $ijazahEngForm,
-                    
-                    $isTranskripEngForm,
-                    $transkripEngForm,
-                ]),
-        ];
-
-        $paymentFormData = [
-            $documentConfirmationForm,
-            $priceAmoutForm,
-        ];
-        
-        if ($this->delivery_method == "home") {
-            if ($this->user->profile) {
-                array_push($orderFormData, $AddressExistLabel);
-            } else {
-                array_push($orderFormData, $isAddressForm);
-            }
+        $this->user = Auth::user();
+        $this->getProvinces();
+        $this->price_amount = $this->document_price;
+        $this->courierTypeList = ['JNE', 'TIKI', 'POS'];
+        $school = School::where('id', $this->user->profile->school_id)
+            ->with('rajaOngkirAddress')
+            ->first(); 
+        $this->school_address = $school->rajaOngkirAddress;
+    }
+    public function updatedProvinceDestination()
+    {
+        if ($this->province_destination) {
+            $province = json_decode($this->province_destination);
+            $this->province_id = $province->province_id;
+            $this->getCities($province->province_id);
         }
-
-        $steps = [Wizard::make([
-                    Wizard\Step::make('Data Pemesan')
-                        ->schema($orderFormData),
-                    Wizard\Step::make('Data Dokumen')
-                        ->schema($documentFormData),
-                    Wizard\Step::make('Pilih Metode Pembayaran')
-                        ->schema($paymentFormData),
-                    ])
-                    ->startOnStep(1)
-                    ->submitAction(new HtmlString('<button type="submit" class="normal-case btn btn-primary btn-sm">Lanjut Pembayaran</button>'))
-                ];
-
-        return $steps;
+    }
+    public function updatedCityDestination()
+    {
+        if ($this->city_destination) {
+            $city = json_decode($this->city_destination);
+            $this->city_id = $city->city_id;
+            $this->postcode = $city->postal_code;
+        }
+    }
+    public function updatedCourierType()
+    {
+        if ($this->courier_type) {
+            $this->getCourierServices($this->courier_type);
+        }
+    }
+    public function updatedCourierService()
+    {
+        if ($this->courier_service) {
+            $courier_service = json_decode($this->courier_service);
+            $this->courier_price = $courier_service->cost[0]->value;
+            $this->price_amount = $this->document_price + $this->courier_price;
+        }
     }
 
     public function mount(): void 
     {
-        $this->user = Auth::user();
-        $this->document = Document::where('user_id', $this->user->id)->first();
-
-        $ijazahIdnPrice = $this->ijazah_idn * 2000;
-        $transkripIdnPrice = $this->transkrip_idn * 2000;
-        $ijazahEngPrice = $this->ijazah_eng * 4000;
-        $transkripEngPrice = $this->transkrip_eng * 4000;
-
-        $this->price_amount = $ijazahIdnPrice + $transkripIdnPrice + $ijazahEngPrice + $transkripEngPrice;
-
-        // set Address
-        if ($this->user->profile) {
-            $this->address = $this->user->profile->address;
-            $this->city = $this->user->profile->city;
-            $this->province = $this->user->profile->province;
-            $this->country = $this->user->profile->country;
-            $this->postcode = $this->user->profile->postcode;
-            $this->full_address = $this->address . ', ' . $this->city . ', ' . $this->province . ', ' . $this->country . ', ' . $this->postcode;
-        }
-
-        $this->form->fill([
-            'user_id' => $this->user->id,
+        $this->orderForm->fill([
             'name' => $this->user->name,
-            'price_amount' => $this->price_amount,
+            'email' => $this->user->email,
+            'phone' => $this->user->profile?->phone,
+            'address_id' => $this->user->profile?->address_id,
         ]);
     }
 
-    public function setActive($state){
-        return $this->active = $state;
+    protected function getOrderFormSchema(): array
+    {
+        return [
+             TextInput::make('name')
+                ->label('Nama Lengkap'),
+            TextInput::make('phone')
+                ->label('Nomor Handphone')
+                ->tel()
+                ->telRegex('/^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/'),
+            TextInput::make('email')
+                ->label('Email')
+                ->email(),
+            // // TextInput::make('address')
+            // //     ->label('Alamat Lengkap'),
+            // Select::make('province_destination')
+            //     ->label('Pilih Provinsi Tujuan')
+            //     ->options($this->getProvinces())
+            //     ->reactive()
+            //     ->afterStateUpdated(function ($state) {
+            //         $this->getCities($state);
+            //     })
+            //     ->searchable()
+            //     ->required(),
+            // Select::make('city_destination')
+            //     ->label('Pilih Kota Tujuan')
+            //     ->options($this->cityByProvince)
+            //     ->reactive()
+            //     ->searchable()
+            //     ->required(),
+        ];
     }
+
+
+    protected function getForms(): array 
+    {
+        return [
+            'orderForm' => $this->makeForm()
+                ->schema($this->getOrderFormSchema()),
+        ];
+    }
+
+    public function setQty($type, $props)
+    {
+       if ($type == 'minus') {
+           $this->$props = $this->$props - 1;
+           if (substr($props,-7) == "idn_qty") {
+            $this->document_price -= 2000;
+           }
+           if (substr($props,-7) == "eng_qty") {
+            $this->document_price -= 4000;
+           }
+       }
+       if ($type == 'plus') {
+            $this->$props = $this->$props + 1;
+            if (substr($props,-7) == "idn_qty") {
+            $this->document_price += 2000;
+           }
+           if (substr($props,-7) == "eng_qty") {
+            $this->document_price += 4000;
+           }
+       }
+       $this->price_amount = $this->document_price + $this->courier_price;
+    }
+
+    public function getCourierServices($courier_type)
+    {
+        $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
+        $courierServices = $rajaOngkir->ongkosKirim([
+            'origin'        => $this->school_address->city_id,     
+            'destination'   => $this->city_id,      
+            'weight'        => 1000,    
+            'courier'       => strtolower($courier_type)    
+        ])->get();
+
+        return $this->courierServiceList = $courierServices[0]['costs'];
+    }
+
+    public function getProvinces()
+    {
+        $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
+        $provinces = $rajaOngkir->provinsi()->all();
+        $province = [];
+        foreach ($provinces as $value) {
+            $province += [$value['province_id'] => $value['province']];
+        }
+        return $this->provinceList = $provinces;
+    }
+
+    public function getCities($province_id)
+    {
+        $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
+        $cities = $rajaOngkir->kota()->dariProvinsi($province_id)->get();
+        $city = [];
+        foreach ($cities as $value) {
+            $city += [$value['city_id'] => $value['city_name']];
+        }
+        // return $this->cityByProvince = $city;
+        return $this->cityByProvince = $cities;
+    }
+    
     public function store(){
-        dd($this->form->getState());
-        $update = true;
-        if ($update) {
+        $this->validate([
+            'name' => ['required'],
+            'phone' => ['required'],
+            'email' => ['required', 'email'],
+            'address' => ['required'],
+            'ijazah_idn_qty' => ['required','numeric','min:1'],
+            'payment_method' => ['required'],
+            'courier_type' => ['required'],
+            'courier_service' => ['required'],
+        ]);
+        $document = Document::select('id')->where('user_id', $this->user->id)->first();
+        if ($this->phone) {
+            $this->user->profile->update([
+                'phone' => $this->phone
+            ]);
+        }
+        if ($this->province_destination && $this->city_destination) {
+            $province = json_decode($this->province_destination);
+            $city = json_decode($this->city_destination);
+            $address = RajaOngkirAddress::create([
+                'city_id' => $city->city_id,
+                'province_id' => $province->province_id,
+                'address' => $this->address,
+                'city' => $city->type . ' ' . $city->city_name,
+                'province' => $province->province,
+                'postcode' => $this->postcode,
+            ]);
+            if ($this->user->profile->address_id) {
+                $addressOld = RajaOngkir::where('id', $this->user->profile->address_id)->first();
+                $addressOld->delete();
+
+                $this->user->profile->update([
+                    'address_id' => $address->id
+                ]);
+            } else{
+                $this->user->profile->update([
+                    'address_id' => $address->id
+                ]);
+            }
+            
+        }
+        
+        $order = Order::create([
+            'user_id' => $this->user->id,
+            'document_id' => $document->id,
+            'transaction_id' => $this->user->id . rand(1111111111,9999999999),
+            'ijazah_idn_qty' => $this->ijazah_idn_qty,
+            'transkrip_idn_qty' => $this->transkrip_idn_qty,
+            'ijazah_eng_qty' => $this->ijazah_eng_qty,
+            'transkrip_eng_qty' => $this->transkrip_eng_qty,
+            'price_amount' => $this->price_amount,
+        ]);
+        $payment = Payment::create([
+            'user_id' => $this->user->id,
+            'order_id' => $order->id,
+        ]);
+        $shipment = Shipment::create([
+            'user_id' => $this->user->id,
+            'order_id' => $order->id,
+            'origin_address_id' => $this->school_address->id,
+            'destination_address_id' => $this->user->profile->address_id,
+            'courier_type' => $this->courier_type,
+            'courier_service' => $this->courier_service,
+            'courier_price' => $this->courier_price,
+        ]);
+
+        $message = 'Pesan Legalisir Dokumen';
+        if ($order) {
             Notification::make() 
                     ->title($message. ' Berhasil')
                     ->success()
                     ->duration(5000)
                     ->send();
-                return redirect('/order');
+                // return redirect('/order?active=payment');
+                return redirect('/payment/'.$payment->id);
         }else {
             Notification::make() 
                 ->title($message. ' Gagal')
@@ -270,9 +270,9 @@ class Create extends Component implements HasForms
                 ->send();
         }
     }
-    
+
     public function render()
     {
-        return view('livewire.user.order.create-filament');
+        return view('livewire.user.order.create');
     }
 }

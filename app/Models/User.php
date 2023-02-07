@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\School;
 use App\Models\Profile;
 use App\Models\Document;
+use App\Models\Shipment;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
@@ -61,5 +62,8 @@ class User extends Authenticatable
     }
     public function order(){
         return $this->hasOne(Order::class, 'user_id', 'id');
+    }
+    public function shipment(){
+        return $this->hasOne(Shipment::class, 'user_id', 'id');
     }
 }

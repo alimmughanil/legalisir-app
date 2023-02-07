@@ -62,6 +62,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/profile', ProfileController::class)->only('index');
     Route::resource('/document', DocumentController::class)->only('index','create','show','edit');
     Route::resource('/order', OrderController::class)->only('index','create','show');
-    Route::resource('/payment', PaymentController::class)->only('store','update');
+    Route::resource('/payment', PaymentController::class)->only('store','update','show');
 });
 

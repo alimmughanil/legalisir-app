@@ -27,9 +27,10 @@ class ProfileFactory extends Factory
             'graduated_at' => $this->faker->year('-'.rand(1,12).'years'),
             'photo' => "https://source.unsplash.com/random/100x100/?landscape",
             'address' => $this->faker->streetAddress(),
+            'urban' => $this->faker->streetSuffix(),
+            'subdistrict' => $this->faker->citySuffix(),
             'city' => $this->faker->city(),
             'province' => $this->faker->state(),
-            'country' => $this->faker->country(),
             'postcode' => $this->faker->postcode(),
         ];
     }
