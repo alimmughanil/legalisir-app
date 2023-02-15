@@ -214,7 +214,7 @@ class Create extends Component implements HasForms
                 'postcode' => $this->postcode,
             ]);
             if ($this->user->profile->address_id) {
-                $addressOld = RajaOngkir::where('id', $this->user->profile->address_id)->first();
+                $addressOld = RajaOngkirAddress::where('id', $this->user->profile->address_id)->first();
                 $addressOld->delete();
 
                 $this->user->profile->update([
