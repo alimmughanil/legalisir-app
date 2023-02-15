@@ -6,10 +6,11 @@ use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Controllers\DocumentController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Livewire\Auth\RegisterSchool;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +47,7 @@ Route::get('password/reset/{token}', Reset::class)->name('password.reset');
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
+    Route::get('register/school', RegisterSchool::class)->name('register.school');
 });
 
 Route::middleware('auth')->group(function () {
@@ -64,4 +68,3 @@ Route::middleware('auth')->group(function () {
     Route::resource('/order', OrderController::class)->only('index','create','show');
     Route::resource('/payment', PaymentController::class)->only('store','update','show');
 });
-

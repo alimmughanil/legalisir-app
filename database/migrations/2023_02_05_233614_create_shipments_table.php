@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('courier_type');
             $table->string('courier_service');
             $table->string('courier_price');
+            $table->string('receipt_delivery')->nullable();
             $table->enum('status', ['Pending','Delivery','Success','Failed'])->default('Pending');
             $table->timestamps();
         });

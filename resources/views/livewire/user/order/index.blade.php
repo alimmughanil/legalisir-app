@@ -88,6 +88,7 @@
                                 $statusLabel = 'Pesanan Dibatalkan';
                             }
                         @endphp
+
                         <div class="flex flex-row items-start justify-between mt-4">
                             <div class="font-medium badge {{ $statusClass }}">{{ $statusLabel }}</div>
                             <div class="font-medium">{{ date('d-m-Y', strtotime($order->updated_at)) }}</div>
@@ -346,6 +347,12 @@
                                 $statusLabel = 'Sedang Dikirim';
                             }
                         @endphp
+                        <div class="flex justify-end">
+                            <button wire:loading.attr='disabled' wire:loading.class='disabled'
+                                class="btn btn-sm btn-primary btn-outline normal-case text-sm">
+                                Lacak
+                            </button>
+                        </div>
                         <div class="flex flex-row items-start justify-between mt-4">
                             <div class="font-medium badge {{ $statusClass }}">{{ $statusLabel }}</div>
                             <div class="font-medium">{{ date('d-m-Y', strtotime($order->updated_at)) }}</div>
