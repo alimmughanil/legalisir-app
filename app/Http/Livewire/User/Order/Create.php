@@ -17,7 +17,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
-
+use GuzzleHttp\Client;
 
 class Create extends Component implements HasForms
 {   
@@ -26,11 +26,11 @@ class Create extends Component implements HasForms
     public $active = 1, $addressEdit = false;
     public $disableOption = [2,3];
     public $user;
-    public $cityByProvince, $provinceList, $courierServiceList, $courierTypeList;
+    public $cityByProvince, $subdistrictByCity, $provinceList, $courierServiceList, $courierTypeList;
 
     public $ijazah_idn_qty = 5, $ijazah_eng_qty = 0, $transkrip_idn_qty = 0, $transkrip_eng_qty = 0, $document_price = 10000,
            $name, $phone,$email, $price_amount,
-           $school_address, $province_destination, $city_destination, $postcode, $address, $province_id, $city_id, $province, $city,
+           $school_address, $province_destination, $city_destination, $subdistrict_destination, $postcode, $address, $province_id, $city_id, $subdistrict_id, $province, $city,
            $courier_type, $courier_service, $courier_price, $payment_method = 'auto';
     
     public function __construct()
@@ -57,13 +57,46 @@ class Create extends Component implements HasForms
         if ($this->city_destination) {
             $city = json_decode($this->city_destination);
             $this->city_id = $city->city_id;
-            $this->postcode = $city->postal_code;
+            $client = new Client(['base_uri' => 'https://pro.rajaongkir.com/']);
+            $json = $client->get('api/subdistrict?city='.$this->city_id, [
+                'headers' => [
+                    'Accept'     => 'application/json',
+                    'key'      => env('RAJAONGKIR_API_KEY')
+                ]
+            ]);
+            $response = json_decode($json->getBody()->getContents());
+            $this->subdistrictByCity = $response->rajaongkir->results;
+        }
+    }
+    public function updatedSubdistrictDestination()
+    {
+        if ($this->subdistrict_destination) {
+            $subdistrict = json_decode($this->subdistrict_destination);
+            $this->subdistrict_id = $subdistrict->subdistrict_id;
         }
     }
     public function updatedCourierType()
     {
         if ($this->courier_type) {
-            $this->getCourierServices($this->courier_type);
+            $client = new Client(['base_uri' => 'https://pro.rajaongkir.com/']);
+            $json = $client->post('api/cost', [
+                'headers' => [
+                    'accept'   => 'application/json',
+                    'content-type'   => 'application/x-www-form-urlencoded',
+                    'key'      => env('RAJAONGKIR_API_KEY')
+                ],
+                'form_params' => [
+                    "origin"=>$this->school_address->city_id,
+                    "originType"=>"city",
+                    "destination"=>$this->subdistrict_id,
+                    "destinationType"=>"subdistrict",
+                    "weight"=>1000,
+                    "courier"=>strtolower($this->courier_type)
+                ]
+            ]);
+            $response = json_decode($json->getBody()->getContents());
+            $result = collect($response->rajaongkir->results[0]->costs);
+            $this->courierServiceList = $result->toArray();
         }
     }
     public function updatedCourierService()
@@ -149,27 +182,11 @@ class Create extends Component implements HasForms
        $this->price_amount = $this->document_price + $this->courier_price;
     }
 
-    public function getCourierServices($courier_type)
-    {
-        $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
-        $courierServices = $rajaOngkir->ongkosKirim([
-            'origin'        => $this->school_address->city_id,     
-            'destination'   => $this->city_id,      
-            'weight'        => 1000,    
-            'courier'       => strtolower($courier_type)    
-        ])->get();
-
-        return $this->courierServiceList = $courierServices[0]['costs'];
-    }
 
     public function getProvinces()
     {
         $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
         $provinces = $rajaOngkir->provinsi()->all();
-        $province = [];
-        foreach ($provinces as $value) {
-            $province += [$value['province_id'] => $value['province']];
-        }
         return $this->provinceList = $provinces;
     }
 
@@ -177,11 +194,6 @@ class Create extends Component implements HasForms
     {
         $rajaOngkir = new RajaOngkir(env('RAJAONGKIR_API_KEY'));
         $cities = $rajaOngkir->kota()->dariProvinsi($province_id)->get();
-        $city = [];
-        foreach ($cities as $value) {
-            $city += [$value['city_id'] => $value['city_name']];
-        }
-        // return $this->cityByProvince = $city;
         return $this->cityByProvince = $cities;
     }
     
@@ -205,11 +217,15 @@ class Create extends Component implements HasForms
         if ($this->province_destination && $this->city_destination) {
             $province = json_decode($this->province_destination);
             $city = json_decode($this->city_destination);
+            $subdistrict = json_decode($this->subdistrict_destination);
+
             $address = RajaOngkirAddress::create([
+                'subdistrict_id' => $subdistrict->city_id,
                 'city_id' => $city->city_id,
                 'province_id' => $province->province_id,
                 'address' => $this->address,
                 'city' => $city->type . ' ' . $city->city_name,
+                'subdistrict' => $subdistrict->subdistrict_name,
                 'province' => $province->province,
                 'postcode' => $this->postcode,
             ]);

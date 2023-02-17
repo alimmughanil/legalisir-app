@@ -60,7 +60,20 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    @if ($city_destination)
+                                @endif
+                                @if ($subdistrictByCity)
+                                    <label class="text-sm">Kecamatan</label>
+                                    <select class="select select-bordered mb-2 w-full" wire:loading.attr='disabled'
+                                        wire:model="subdistrict_destination" name="subdistrict_destination"
+                                        id="">
+                                        <option value="" selected>Pilih Salah Satu Kecamatan</option>
+                                        @foreach ($subdistrictByCity as $subdistrict)
+                                            <option value="{{ json_encode($subdistrict) }}">
+                                                {{ is_array($subdistrict) ? $subdistrict['subdistrict_name'] : $subdistrict->subdistrict_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($subdistrict_id)
                                         <label class="text-sm">Kode Pos</label>
                                         <input type="text" class="input input-bordered w-full mb-2"
                                             value="{{ $postcode }}" wire:model="postcode">
@@ -194,11 +207,19 @@
                             wire:model="courier_service" name="courier_service" id="">
                             <option value="" selected>Pilih Salah Satu Layanan</option>
                             @foreach ($courierServiceList as $courier)
-                                <option value="{{ json_encode($courier) }}">
-                                    {{ $courier['service'] }} ({{ $courier['cost'][0]['etd'] }}
-                                    {{ $courier_type == 'POS' ? '' : 'Hari' }}) -
-                                    Rp{{ number_format($courier['cost'][0]['value'], 0, ',', '.') }}
-                                </option>
+                                @if (is_array($courier))
+                                    <option value="{{ json_encode($courier) }}">
+                                        {{ $courier['service'] }} ({{ $courier['cost'][0]['etd'] }}
+                                        {{ $courier_type == 'POS' ? '' : 'Hari' }}) -
+                                        Rp{{ number_format($courier['cost'][0]['value'], 0, ',', '.') }}
+                                    </option>
+                                @else
+                                    <option value="{{ json_encode($courier) }}">
+                                        {{ $courier->service }} ({{ $courier->cost[0]->etd }}
+                                        {{ $courier_type == 'POS' ? '' : 'Hari' }}) -
+                                        Rp{{ number_format($courier->cost[0]->value, 0, ',', '.') }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     @endif
