@@ -11,7 +11,7 @@ module.exports = {
                 warning: colors.yellow,
             },
             fontFamily: {
-                sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+                sans: ["Helvetica", ...defaultTheme.fontFamily.sans],
             },
         },
     },
@@ -34,7 +34,18 @@ module.exports = {
         "./resources/**/*.twig",
     ],
     daisyui: {
-        themes: ["light", "night"],
+        themes: [
+            {
+                light: {
+                    ...require("daisyui/src/colors/themes")[
+                        "[data-theme=light]"
+                    ],
+                    primary: "#660066",
+                    "primary-focus": "#660056",
+                    "primary-content": "#f3f4f6",
+                },
+            },
+        ],
     },
     plugins: [
         require("@tailwindcss/forms"),

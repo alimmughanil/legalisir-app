@@ -1,157 +1,245 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex justify-center w-full sm:py-2">
-        <nav class="flex z-[999] bg-gray-50 items-center justify-between container fixed shadow p-2 sm:border sm:border-gray-100 sm:rounded-lg"
-            aria-label="Global">
-            <div class="flex lg:min-w-0 lg:flex-1" aria-label="Global">
-                <a href="/" class="-m-1.5 p-1.5">
-                    <div class="flex items-center gap-2">
-                        <img class="h-8" src="/image/logo.svg" alt="">
-                        <span class="text-lg text-gray-500">Legalisirku</span>
+    <div class="">
+        <div class="navbar mx-auto fixed px-2 md:px-16 bg-white z-[999]">
+            <div class="navbar-start">
+                <a href="/">
+                    <img src="/image/logo.png" alt="" class="w-28 py-2">
+                </a>
+            </div>
+            <div class="navbar-end gap-2">
+                <a href="/register" class="btn btn-outline btn-sm normal-case">Register</a>
+                <a href="/login" class="btn btn-sm normal-case btn-primary">Login</a>
+            </div>
+        </div>
+        <div class="flex flex-col-reverse md:flex-row md:justify-between items-center px-4 md:px-16 pt-16">
+            <div class="flex flex-col gap-4">
+                <p class="text-xl md:text-4xl font-bold font-[Quicksand] text-gray-900">Legalisir Dokumen Kapanpun,
+                    dimanapun</p>
+                <div class="">
+                    <p class="text-sm md:text-base text-gray-600">Membantu Anda dalam pembuatan legalisir dokumen penting
+                        dimanapun dan
+                        kapanpun.
+                    </p>
+                    <p class="text-sm md:text-base text-gray-600">Legalisir Online meningkatkan kualitas layanan guna
+                        menjawab
+                        keresahan alumni dan penugasan pegawai
+                        dengan lokasi yang jauh dan juga kecepatan dalam proses legalisir.</p>
+                </div>
+                <a href="/order/create" class="btn normal-case btn-primary w-max mx-auto md:mx-0 btn-sm text-lg">Pesan
+                    Sekarang</a>
+            </div>
+            <img src="/image/legalisir.png" alt="" class="w-[32rem]">
+        </div>
+        <div class="px-4 md:px-16 py-16">
+            <div class="flex flex-col gap-8">
+                <div class="">
+                    <p class="text-xl md:text-4xl font-bold font-[Quicksand] text-gray-900 text-center">Mengapa
+                        Legalisir.com
+                    </p>
+                    <p class="text-sm md:text-base text-gray-600 text-center">Legalisir.com membantu Anda dalam pembuatan
+                        legalisir
+                        dokumen penting dimanapun dan kapanpun.
+                    </p>
+                </div>
+                <div class="flex flex-row flex-wrap justify-center items-start gap-4">
+                    <div class="flex flex-col justify-center items-center gap-2">
+                        <div
+                            class="p-8 bg-gray-100 rounded-3xl transition duration-0 hover:duration-300 hover:rounded-full">
+                            <i class="fas fa-file-import fa-4x"></i>
+                        </div>
+                        <div class="w-full md:w-[20rem]">
+                            <p class="text-xl md:text-xl font-bold font-[Quicksand] text-gray-900 text-center">Kemudahan</p>
+                            <p class="text-sm md:text-base text-gray-600 text-center">Proses cepat & Akurat. CS Kami Cepat
+                                merespons menjawab segala kebutuhan anda</p>
+                        </div>
                     </div>
-                </a>
-            </div>
-
-            <div class="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12">
-                <a href="#benefit" class="font-semibold text-gray-900 hover:text-gray-900">Benefit</a>
-                <a href="#partner" class="font-semibold text-gray-900 hover:text-gray-900">Mitra Sekolah</a>
-                <a href="#registration-partner" class="font-semibold text-gray-900 hover:text-gray-900">
-                    Pendaftaran Mitra
-                </a>
-            </div>
-            <div class="hidden lg:flex items-center justify-end lg:flex-1 min-w-0 gap-2">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ route('dashboard.index') }}"
-                            class="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:bg-gray-50">
-                            Dashboard
-                        </a>
-                        <div class="hidden">
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                class="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:bg-gray-50">
-                                Log out
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
+                    <div class="flex flex-col justify-center items-center gap-2">
+                        <div
+                            class="p-8 bg-gray-100 rounded-3xl transition duration-0 hover:duration-300 hover:rounded-full">
+                            <i class="fas fa-lock fa-4x"></i>
                         </div>
-                    @else
-                        <div class="hidden md:block">
-                            <a href="{{ route('login') }}"
-                                class="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-100 shadow-sm ring-1 bg-gray-600 ring-gray-900/10 hover:bg-gray-700">Log
-                                in</a>
+                        <div class="w-full md:w-[20rem]">
+                            <p class="text-xl md:text-xl font-bold font-[Quicksand] text-gray-900 text-center">Keamanan</p>
+                            <p class="text-sm md:text-base text-gray-600 text-center">Keamanan dokumen terjamin menggunakan
+                                private cloud, sehingga aman dan privasi.</p>
                         </div>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}"
-                                class="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:bg-gray-50">Register</a>
-                        @endif
-                    @endauth
-                @endif
-                {{--  --}}
-            </div>
-            <div class="flex lg:hidden pr-4">
-                <button onclick="document.getElementById('menu').classList.toggle('hidden')"
-                    class="btn btn-sm btn-ghost btn-circle">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
-        </nav>
-    </div>
-    <div class="hidden" id="menu">
-        <div class="flex z-[1000] mt-16 sticky-top ml-auto flex-col bg-white rounded-lg gap-2 shadow-sm">
-            <a href="{{ route('dashboard.index') }}"
-                class="inline-block text-center rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:bg-gray-50">
-                Dashboard
-            </a>
-            <a href="#benefit" class="font-semibold text-center text-gray-900 hover:text-gray-900">Benefit</a>
-            <a href="#partner" class="font-semibold text-center text-gray-900 hover:text-gray-900">Mitra Sekolah</a>
-            <a href="#registration-partner" class="font-semibold text-center text-gray-900 hover:text-gray-900">
-                Pendaftaran Mitra
-            </a>
-        </div>
-    </div>
-    <div class="relative -mt-4 w-full min-h-screen bg-gradient-to-b from-blue-900 to-blue-50 outline-none border-b-0">
-        <div class="max-w-3xl mx-auto pt-48 pb-40">
-            <div>
-                <h1 class="font-bold tracking-tight text-center text-6xl text-gray-100">Legalisirku</h1>
-                <p class="mt-6 text-lg leading-8 text-center text-gray-100 sm:text-gray-200">Sistem Informasi Legalisir
-                    Ijazah Sekolah</p>
-                <div class="flex mt-8 gap-x-4 justify-center">
-                    <a href="{{ route('login') }}"
-                        class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700">
-                        Pesan Sekarang
-                        <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
-                    </a>
+                    </div>
+                    <div class="flex flex-col justify-center items-center gap-2">
+                        <div
+                            class="p-8 bg-gray-100 rounded-3xl transition duration-0 hover:duration-300 hover:rounded-full">
+                            <i class="fa-sharp fa-solid fa-clock-rotate-left fa-4x"></i>
+                        </div>
+                        <div class="w-full md:w-[20rem]">
+                            <p class="text-xl md:text-xl font-bold font-[Quicksand] text-gray-900 text-center">Kecepatan</p>
+                            <p class="text-sm md:text-base text-gray-600 text-center">Kecepatan pengiriman menggunakan
+                                ekspedisi bepengalaman, jangkauan dalam maupu luar negeri.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="benefit"
-        class="relative px-4 sm:px-0 w-full min-h-screen bg-gradient-to-b from-blue-50 to-white outline-none border-t-0">
-        <div class="flex flex-col-reverse sm:flex-row justify-center w-full h-full pt-28 gap-4">
-            <img class="w-[300px] image-full rounded-lg shadow-sm mx-auto sm:mx-0"
-                src="https://pixabay.com/get/g704f8c868454529a30878330cf976cbd680baa31107ba28b25d8ee3fd47c03d2a07c6e9ddc13fb60be00f1ea5905377589d9cb75d7ce4bcb023413e6949ef7c68499a6f6f0bbc0eca80a0337bcf9ed60_1920.jpg"
-                alt="">
-            <div>
-                <h1 class="font-bold tracking-tight text-start text-2xl text-gray-700">Mengapa Harus Menggunakan Layanan
-                    Kami?</h1>
-                <ul class="max-w-[40rem] pl-4 text-left">
-                    <li class="list-disc mt-6 text-lg leading-8 text-gray-600">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    </li>
-                    <li class="list-disc mt-6 text-lg leading-8 text-gray-600">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse, optio perferendis.
-                    </li>
-                    <li class="list-disc mt-6 text-lg leading-8 text-gray-600">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae incidunt provident dicta dolores vel?
-                    </li>
-                    <li class="list-disc mt-6 text-lg leading-8 text-gray-600">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae!
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div id="partner" class="relative w-full min-h-screen">
-        <div class="flex flex-col sm:flex-row justify-center w-full h-full pt-28 gap-4">
-            <div>
-                <h1 class="font-bold tracking-tight text-center text-2xl text-gray-700">
-                    Mitra Sekolah Terdaftar
-                </h1>
-                <div class="flex flex-wrap gap-4 pt-4 sm:max-w-[80vw] justify-center items-center">
-                    @php
-                        $i = 0;
-                    @endphp
-                    @for ($i = 0; $i < 20; $i++)
-                        <img width="120px" class="border rounded-lg shadow-lg p-3"
-                            src="https://upload.wikimedia.org/wikipedia/id/6/67/Logo_Universitas_Islam_Negeri_Walisongo.png"
-                            alt="">
-                    @endfor
+        <div class="px-4 md:px-16 py-16 bg-[#ffe2ff]">
+            <div class="flex flex-col gap-8">
+                <div class="">
+                    <p class="text-xl md:text-4xl font-bold font-[Quicksand] text-gray-900 text-center">Legalisir Dokumen
+                        Kapanpun, dimanapun
+                    </p>
+                    <p class="text-sm md:text-base text-gray-600 text-center">Kami melayani legalisir dokumen perusahaan,
+                        legalisir ijazah, legalisir transkrip nilai, legalisir surat keterangan belum menikah/skbm,
+                        legalisir skck/police record, legalisir akte kelahiran, legalisir akte kematian, legalisir akte
+                        perkawinan, legalisir akte cerai, legalisir buku nikah, legalisir surat perjanjian, legalisir surat
+                        pengalaman kerja, legalisir surat kuasa, legalisir medical, legalisir kemenristek dikti dan lain
+                        sebagainya.
+                    </p>
+                </div>
+                <div class="flex flex-row flex-wrap justify-center items-start gap-4">
+                    <div class="flex flex-col justify-center items-center gap-2 w-full md:w-96">
+                        <div class="p-8 relative rounded-lg bg-white shadow-lg flex flex-col gap-4 h-full md:h-[33rem]">
+                            <p class="text-sm text-gray-700">Untuk Pendidikan</p>
+                            <p class="text-[#660066]"><span class="text-4xl">Legalisir</span> <span
+                                    class="text-xl">Sekolah</span>
+                            </p>
+                            <p class="text-sm text-gray-700">Legalisir Online</p>
+                            <p class="text-lg text-gray-700">Sekolah</p>
+
+                            <div class="flex flex-col text-gray-800">
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Menyiapkan file scan dokumen legalisir (Ijazah dan atau Transkrip Nilai
+                                        asli)</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Membuat Surat Pernyataan Keaslian Berkas, dengan materai 10.000.</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Mengisi Tracer Studi</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Melakukan pembayaran melalui Transfer, Dompet Digital, atau QRIS</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Cek Metode Pengiriman Dokumen</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-8 left-8">
+                                <a href="/order/create"
+                                    class="btn normal-case btn-primary w-max mx-auto md:mx-0 btn-sm text-lg">Pesan
+                                    Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center gap-2 w-full md:w-96">
+                        <div class="p-8 relative rounded-lg bg-white shadow-lg flex flex-col gap-4 h-full md:h-[33rem]">
+                            <p class="text-sm text-gray-700">Untuk Pemerintahan</p>
+                            <p class="text-[#660066]"><span class="text-4xl">Legalisir</span> <span
+                                    class="text-xl">Dinas</span>
+                            </p>
+                            <p class="text-sm text-gray-700">Legalisir Online</p>
+                            <p class="text-lg text-gray-700">Dinas</p>
+
+                            <div class="flex flex-col text-gray-800">
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Penduduk mengajukan berkas kepada petugas</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Berkas diverifikasi dan distempel legalisir</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Kabid/ Kasi menandatangani berkas</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Penyerahan berkas legalisir kepada pemohon</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Melakukan pembayaran melalui Transfer, Dompet Digital, atau QRIS</span>
+                                </div>
+                                <div class="flex flex-row gap-4 items-center">
+                                    <i class="fas fa-check text-[#660066]"></i>
+                                    <span>Cek Metode Pengiriman Dokumen</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-8 left-8">
+                                <a href="/order/create"
+                                    class="btn normal-case btn-primary w-max mx-auto md:mx-0 btn-sm text-lg">Pesan
+                                    Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="registration-partner" class="relative w-full min-h-screen flex justify-center items-center">
-        <div class="border p-8 shadow-lg rounded-lg">
-            <h1 class="font-bold tracking-tight text-center text-2xl text-gray-700">
-                Gabung Sebagai Mitra
-            </h1>
-            <p class="mt-6 text-lg leading-8 text-center text-gray-600">
-                Ayo gabung bersama kami dan rasakan manfaatnya sekarang!
-            </p>
-            <div class="flex mt-8 gap-x-4 justify-center">
-                <a href="/register/school"
-                    class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700">
-                    Pendaftaran Mitra Sekolah
-                    <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
-                </a>
+        <div class="flex flex-col-reverse md:flex-row md:justify-between items-center px-4 md:px-16 py-16">
+            <div class="flex flex-col gap-4">
+                <p class="text-xl md:text-4xl font-bold font-[Quicksand] text-gray-900">Lebih dari 350+ dokumen legalisir
+                    terkirim dengan aman, dan terus bertambah</p>
+                <div class="flex flex-col justify-start items-start gap-4">
+                    <div class="flex flex-col justify-start items-start gap-1">
+                        <label>Dokumen Berhasil</label>
+                        <div class="bg-gray-200 w-80 rounded-full dark:bg-gray-700">
+                            <div class="bg-[#660066] text-xs font-medium text-gray-100 text-center p-0.5 leading-none rounded-full"
+                                style="width: 90%"> 90%</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-start items-start gap-1">
+                        <label>Legalisir Ijazah</label>
+                        <div class="bg-gray-200 w-80 rounded-full dark:bg-gray-700">
+                            <div class="bg-[#660066] text-xs font-medium text-gray-100 text-center p-0.5 leading-none rounded-full"
+                                style="width: 80%"> 80%</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-start items-start gap-1">
+                        <label>Legalisir Kedinasan</label>
+                        <div class="bg-gray-200 w-80 rounded-full dark:bg-gray-700">
+                            <div class="bg-[#660066] text-xs font-medium text-gray-100 text-center p-0.5 leading-none rounded-full"
+                                style="width: 60%"> 60%</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-start items-start gap-1">
+                        <label>Kepuasan Pelanggan</label>
+                        <div class="bg-gray-200 w-80 rounded-full dark:bg-gray-700">
+                            <div class="bg-[#660066] text-xs font-medium text-gray-100 text-center p-0.5 leading-none rounded-full"
+                                style="width: 82%"> 82%</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <img src="/image/Pilihan-Tepat.png" alt="" class="w-[32rem]">
+        </div>
+        <div class="px-4 md:px-16 pt-16 py-4 bg-[#660066]">
+            <div class="flex flex-col md:flex-row md:justify-around items-start">
+                <div class="flex flex-col gap-4">
+                    <img src="/image/Footer-Logo-Daya-Bimantara.png" alt="" class="w-56 rounded-lg">
+                    <div class="text-gray-200">
+                        <p>Perumahan Taman Puri Banjaran Blok C2 RT 01 RW 18</p>
+                        <p>Kelurahan Bringin, Kecamatan Ngaliyan</p>
+                        <p>Kota Semarang Ngaliyan Kota Semarang Jawa Tengah 50189</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4 items-center justify-center">
+                    <p class="text-gray-100 font-semibold">Navigasi</p>
+                    <div class="flex flex-row gap-4 items-start text-gray-200">
+                        <a href="/">Home</a>
+                        <a href="#">About</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="border-t-2 pt-2 mt-4">
+                <p class="text-gray-100 text-center">Copyright © <?= now()->year ?> - CV Daya Bimantara</p>
             </div>
         </div>
     </div>
-    <footer class="flex justify-center py-4 border">
-        <div class="text-gray-700">Copyright@<?= now()->year ?> - {{ config('app.name') }}</div>
-    </footer>
 @endsection
