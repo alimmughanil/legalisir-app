@@ -1,14 +1,11 @@
 @props(['role'])
 <div class="flex flex-row items-start">
-    <div class="relative hidden min-h-screen border shadow-lg lg:block w-72" id="sidebar">
+    <div class="relative hidden min-h-screen shadow-lg lg:block w-72 bg-[#660066]" id="sidebar">
         <div class="px-6 pt-4 pb-2">
             <a href="/">
                 <div class="flex flex-col items-center justify-center">
                     <div class="shrink-0">
-                        <img src="/image/logo.svg" class="w-10 rounded-full" alt="Avatar">
-                    </div>
-                    <div class="ml-3 grow">
-                        <p class="text-lg font-semibold text-gray-600">{{ config('app.name') }}</p>
+                        <img src="/image/logo-legalisirku.png" class="bg-gray-100 p-4 rounded-xl shadow-lg" alt="Avatar">
                     </div>
                 </div>
             </a>
@@ -16,63 +13,63 @@
         @if (Auth::user()->role == 'User')
             <ul class="relative">
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/dashboard">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
+                        <i class="fas fa-tachometer-alt "></i>
+                        <span class="">Dashboard</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/document">
-                        <i class="fa-solid fa-file"></i>
-                        <span class="pl-1">Data Dokumen</span>
+                        <i class="fa-solid fa-file "></i>
+                        <span class="pl-1 ">Data Dokumen</span>
                     </a>
                 </li>
                 <li class="relative" id="OrderMenu">
                     <button onclick="collapseMenu()"
-                        class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded cursor-pointer text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
-                        <i class="fas fa-clipboard"></i>
+                        class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded cursor-pointer text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300">
+                        <i class="fas fa-clipboard "></i>
                         <div class="flex items-center gap-4 pl-1">
-                            <span>Pesanan Saya</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <span class="">Pesanan Saya</span>
+                            <i class="fas fa-chevron-down "></i>
                         </div>
                     </button>
                     <ul id="orderMenu" class="relative hidden">
                         <li class="relative">
                             <a href="/order?active=payment"
-                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
-                                <i class="text-gray-500 fas fa-circle"></i>
-                                <span>Belum Dibayar</span>
+                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs  transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap text-gray-300 hover:text-[#660066] hover:bg-gray-300">
+                                <i class="fas fa-circle "></i>
+                                <span class="">Belum Dibayar</span>
                             </a>
                         </li>
                         <li class="relative">
                             <a href="/order?active=processing"
-                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
-                                <i class="text-gray-500 fas fa-circle"></i>
-                                <span>Sedang Diproses</span>
+                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs  transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap text-gray-300 hover:text-[#660066] hover:bg-gray-300">
+                                <i class="fas fa-circle "></i>
+                                <span class="">Sedang Diproses</span>
                             </a>
                         </li>
                         <li class="relative">
                             <a href="/order?active=delivery"
-                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
-                                <i class="text-gray-500 fas fa-circle"></i>
-                                <span>Sedang Dikirim</span>
+                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs  transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap text-gray-300 hover:text-[#660066] hover:bg-gray-300">
+                                <i class="fas fa-circle "></i>
+                                <span class="">Sedang Dikirim</span>
                             </a>
                         </li>
                         <li class="relative">
                             <a href="/order"
-                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50">
-                                <i class="text-gray-500 fas fa-circle"></i>
-                                <span>Semua Pesanan</span>
+                                class="flex flex-row items-center h-6 gap-2 pl-12 pr-6 ml-2 overflow-hidden text-xs  transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap text-gray-300 hover:text-[#660066] hover:bg-gray-300">
+                                <i class="fas fa-circle "></i>
+                                <span class="">Semua Pesanan</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap text-gray-300 hover:text-[#660066] hover:bg-gray-300"
                         href="/profile">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user "></i>
                         <span class="ml-[0.17rem]">Profil Saya</span>
                     </a>
                 </li>
@@ -81,40 +78,40 @@
         @if (Auth::user()->role == 'Admin')
             <ul class="relative">
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/dashboard">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
+                        <i class="fas fa-tachometer-alt "></i>
+                        <span class="">Dashboard</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/document">
-                        <i class="fa-solid fa-file"></i>
-                        <span class="pl-1">Data Dokumen</span>
+                        <i class="fa-solid fa-file "></i>
+                        <span class="pl-1 ">Data Dokumen</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/order">
-                        <i class="fa-solid fa-clipboard"></i>
-                        <span class="pl-1">Data Pesanan</span>
+                        <i class="fa-solid fa-clipboard "></i>
+                        <span class="pl-1 ">Data Pesanan</span>
                     </a>
                 </li>
 
 
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/account">
-                        <i class="fas fa-users"></i>
-                        <span class="-ml-[0.17rem]">Data Alumni</span>
+                        <i class="fas fa-users "></i>
+                        <span class=" -ml-[0.17rem]">Data Alumni</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/profile">
-                        <i class="fas fa-user"></i>
-                        <span class="ml-[0.17rem]">Profil Sekolah</span>
+                        <i class="fas fa-user "></i>
+                        <span class=" ml-[0.17rem]">Profil Sekolah</span>
                     </a>
                 </li>
             </ul>
@@ -122,23 +119,23 @@
         @if (Auth::user()->role == 'Super Admin')
             <ul class="relative">
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/dashboard">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
+                        <span class="">Dashboard</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/account">
-                        <i class="fas fa-school"></i>
+                        <i class="fas fa-school "></i>
                         <span class="-ml-[0.17rem]">Data Sekolah</span>
                     </a>
                 </li>
                 <li class="relative">
-                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-700 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                    <a class="flex items-center h-12 gap-4 px-6 py-4 overflow-hidden text-sm text-gray-300 transition duration-300 ease-in-out rounded text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                         href="/about">
-                        <i class="fa-solid fa-rocket"></i>
+                        <i class="fa-solid fa-rocket "></i>
                         <span class="">Data Aplikasi</span>
                     </a>
                 </li>
@@ -146,7 +143,7 @@
         @endif
         <div class="absolute bottom-0 w-full text-center shadow-md">
             <hr class="m-0">
-            <p class="py-2 text-sm text-gray-700">Copyright@2023</p>
+            <p class="py-2 text-sm text-gray-300">Copyright@2023</p>
         </div>
     </div>
     <div class="flex flex-col items-start w-full gap-2 px-4 sm:gap-8 md:px-8">
@@ -175,9 +172,9 @@
                         <ul tabIndex="0" class="p-2 mt-3 shadow dropdown-content bg-base-100 rounded-box w-max">
                             @if (Auth::user()->role != 'Super Admin')
                                 <li class="p-2 cursor-pointer hover:text-primary hover:scale-105">
-                                    <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                                    <a class="flex items-center gap-4 p-2 overflow-hidden  transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                                         href="/profile">
-                                        <i class="fas fa-user"></i>
+                                        <i class="fas fa-user "></i>
                                         @if (Auth::user()->role == 'Admin')
                                             <span class="">Profil Sekolah</span>
                                         @else
@@ -187,9 +184,9 @@
                                 </li>
                             @endif
                             <li class="p-2 cursor-pointer hover:text-primary hover:scale-105">
-                                <a class="flex items-center gap-4 p-2 overflow-hidden text-gray-700 transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-blue-600 hover:bg-blue-50"
+                                <a class="flex items-center gap-4 p-2 overflow-hidden  transition duration-300 ease-in-out rounded-lg text-ellipsis whitespace-nowrap hover:text-[#660066] hover:bg-gray-300"
                                     href="#logout-confirm">
-                                    <i class="fas fa-right-from-bracket"></i>
+                                    <i class="fas fa-right-from-bracket "></i>
                                     <span class="">Logout</span>
                                 </a>
                             </li>

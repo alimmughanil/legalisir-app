@@ -42,6 +42,7 @@ class Register extends Component implements HasForms
                 ->label('Sekolah')
                 ->options($this->activeSchool)
                 ->searchable()
+                ->extraInputAttributes(['bg-[#660066]'])
                 ->required(),
             TextInput::make('student_id')
                 ->label('Nomor Induk Siswa (NIS)')

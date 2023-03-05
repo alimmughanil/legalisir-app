@@ -5,7 +5,7 @@
         <div class="navbar mx-auto fixed px-2 md:px-16 bg-white z-[999]">
             <div class="navbar-start">
                 <a href="/">
-                    <img src="/image/logo.png" alt="" class="w-28 py-2">
+                    <img src="/image/logo-legalisirku.png" alt="" class="w-28 py-2">
                 </a>
             </div>
             <div class="navbar-end gap-2">

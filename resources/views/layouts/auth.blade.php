@@ -2,7 +2,7 @@
 
 @section('body')
     <section class="w-full min-h-screen bg-gray-200">
-        <nav class="w-full gap-4 px-4 py-2 mx-auto font-medium text-gray-200 md:w-96 bg-primary-800">
+        <nav class="w-full gap-4 px-4 py-2 mx-auto font-medium text-gray-200 md:w-96 bg-[#660066]">
             <a href="/">
                 <i class="text-lg fas fa-arrow-left"></i>
             </a>
